@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { PiGlobeBold } from "react-icons/pi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RxDividerVertical } from "react-icons/rx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLockBodyScroll } from "@/hooks/hooks";
 
 export function Header() {
