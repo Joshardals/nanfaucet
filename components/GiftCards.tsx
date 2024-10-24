@@ -6,7 +6,7 @@ import { Ratings } from "./Ratings";
 
 export function GiftCards() {
   return (
-    <section className="p-5 font-medium max-content space-y-5">
+    <section className="font-medium p-5 max-content space-y-5">
       <div className="flex items-center space-x-4">
         <Image
           src="card.svg"

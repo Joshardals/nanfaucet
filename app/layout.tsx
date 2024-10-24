@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased ${roboto.variable}`}>
         <Header />
-        <div className="mt-32 md:mt-[4.7rem]">{children}</div>
+        <div className="mt-[4.7rem]">{children}</div>
       </body>
     </html>
   );

@@ -16,31 +16,26 @@ import {
 
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RxDividerVertical } from "react-icons/rx";
-import { useEffect, useRef, useState } from "react";
 import { useLockBodyScroll } from "@/hooks/hooks";
+import { useState } from "react";
 
 export function Header() {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const toggleLanguage = () => {
     setIsLanguageOpen(!isLanguageOpen);
-  };
-
-  const toggleSearch = () => {
-    setIsSearchOpen(!isSearchOpen);
   };
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  useLockBodyScroll(isLanguageOpen, isOpen, isSearchOpen);
+  useLockBodyScroll(isLanguageOpen, isOpen);
 
   return (
     <>
-      <header className="py-5 text-sm font-medium bg-white shadow-md fixed top-0 left-0 right-0 z-10 ">
+      <header className="py-5 text-sm font-medium shadow-md fixed top-0 left-0 right-0 z-10 ">
         <div className="max-content space-y-5">
           <div className="flex items-center justify-between px-5 md:px-5 md:space-x-5">
             <span className="font-bold text-accent text-base max-md:hidden">
@@ -56,10 +51,6 @@ export function Header() {
 
               <span className="text-accent md:hidden">logo</span>
             </div>
-            {/* Desktop */}
-            <div className="max-md:hidden flex-1" onClick={toggleSearch}>
-              <SearchToggle />
-            </div>
             <div className="flex items-center space-x-1 text-primary/70">
               <div className="flex items-center space-x-2 py-2 px-4 cursor-pointer hover-effects hover:text-primary hover:bg-primary/10 rounded-md">
                 {/* <PiGlobeBold className="size-5" /> */}
@@ -74,10 +65,6 @@ export function Header() {
               </div>
             </div>
           </div>
-
-          <div className="px-5 md:hidden" onClick={toggleSearch}>
-            <SearchToggle />
-          </div>
         </div>
       </header>
 
@@ -86,7 +73,6 @@ export function Header() {
         toggleLanguage={toggleLanguage}
       />
       <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
-      <SearchBar isSearchOpen={isSearchOpen} toggleSearch={toggleSearch} />
     </>
   );
 }
@@ -100,7 +86,7 @@ function Language({
 }) {
   return (
     <div
-      className={`bg-black/80 fixed bottom-0 flex items-center justify-center max-md:p-5 min-h-screen w-full hover-effects
+      className={`bg-black/80 fixed z-20 bottom-0 flex items-center justify-center max-md:p-5 min-h-screen w-full hover-effects
         ${
           isLanguageOpen
             ? "opacity-100 pointer-events-auto"
@@ -151,63 +137,6 @@ function Language({
   );
 }
 
-function SearchBar({
-  isSearchOpen,
-  toggleSearch,
-}: {
-  isSearchOpen: boolean;
-  toggleSearch: () => void;
-}) {
-  const inputRef = useRef<HTMLInputElement | null>(null);
-
-  useEffect(() => {
-    if (isSearchOpen && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isSearchOpen]);
-  return (
-    <div
-      className={`bg-black/80 fixed bottom-0 flex items-center justify-center max-md:p-5 min-h-screen w-full hover-effects
-        ${
-          isSearchOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        } 
-        `}
-      onClick={toggleSearch}
-    >
-      <div
-        className="font-medium rounded-md bg-white h-[50vh] w-full md:w-[30rem] py-2 space-y-2"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center space-x-2 border-b border-primary/20 px-5">
-          <IoIosSearch className="size-5 text-primary/50" />
-          <input
-            ref={inputRef}
-            type="search"
-            title="search"
-            placeholder="Search for products"
-            className="outline-none py-2 flex-1 bg-white"
-          />
-        </div>
-
-        <div className="text-primary/50 px-5">
-          <span className="text-sm">Categories</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function SearchToggle() {
-  return (
-    <div className="ring-1 ring-primary/10 bg-primary/[0.02] text-primary/50 cursor-pointer outline-none px-4 py-2 rounded-md hover-effects hover:text-primary flex items-center space-x-2">
-      <IoIosSearch className="size-5" />
-      <span>Search for products</span>
-    </div>
-  );
-}
-
 function Sidebar({
   isOpen,
   toggleSidebar,
@@ -217,7 +146,7 @@ function Sidebar({
 }) {
   return (
     <div
-      className="bg-black/80 fixed top-0 right-0 left-0 w-full"
+      className="bg-black/80 fixed top-0 right-0 left-0 w-full z-20"
       onClick={toggleSidebar}
     >
       <AnimatePresence>
