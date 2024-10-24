@@ -40,7 +40,7 @@ export function Header() {
 
   return (
     <>
-      <header className="py-5 text-sm font-medium bg-white shadow-md fixed top-0 left-0 right-0 ">
+      <header className="py-5 text-sm font-medium bg-white shadow-md fixed top-0 left-0 right-0 z-10 ">
         <div className="max-content space-y-5">
           <div className="flex items-center justify-between px-5 md:px-5 md:space-x-5">
             <span className="font-bold text-accent text-base max-md:hidden">
@@ -62,7 +62,7 @@ export function Header() {
             </div>
             <div className="flex items-center space-x-1 text-primary/70">
               <div className="flex items-center space-x-2 py-2 px-4 cursor-pointer hover-effects hover:text-primary hover:bg-primary/10 rounded-md">
-                <PiGlobeBold className="size-5" />
+                {/* <PiGlobeBold className="size-5" /> */}
                 <span>XNO/USD</span>
               </div>
               <RxDividerVertical className="size-5 text-primary/20" />
@@ -140,7 +140,7 @@ function Language({
 
             <button
               title="Save Language"
-              className="bg-accent hover-effects hover:bg-accent/80 text-white px-4 py-2 w-full rounded-md"
+              className="bg-accent/80 hover-effects hover:bg-accent text-white px-4 py-2 w-full rounded-md"
             >
               Save
             </button>
