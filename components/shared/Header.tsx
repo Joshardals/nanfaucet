@@ -51,7 +51,7 @@ function Sidebar({
   toggleSidebar,
 }: {
   isOpen: boolean;
-  toggleSidebar: any;
+  toggleSidebar: () => void;
 }) {
   return (
     <div
