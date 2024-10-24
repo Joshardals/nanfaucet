@@ -33,7 +33,7 @@ export function Header() {
 
   return (
     <>
-      <header className="py-5 text-sm font-medium shadow-md fixed top-0 left-0 right-0 z-10 ">
+      <header className="py-5 text-sm font-medium bg-white shadow-md fixed top-0 left-0 right-0 z-10 ">
         <div className="max-content space-y-5">
           <div className="flex items-center justify-between px-5 md:px-5 md:space-x-5">
             <span className="font-bold text-accent text-base max-md:hidden">
