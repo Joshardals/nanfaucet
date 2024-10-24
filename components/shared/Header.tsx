@@ -20,7 +20,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLockBodyScroll } from "@/hooks/hooks";
 
 export function Header() {
-  const [isLanguageOpen, setIsLanguageOpen] = useState(true);
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
