@@ -15,3 +15,10 @@
     @apply max-w-[1200px] mx-auto;
   }
 }
+
+@layer base {
+  :root {
+
+    --radius: 0.5rem
+  }
+}

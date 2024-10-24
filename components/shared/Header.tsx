@@ -3,14 +3,30 @@ import { HiMiniXMark } from "react-icons/hi2";
 import { IoIosSearch } from "react-icons/io";
 import { motion, AnimatePresence } from "framer-motion";
 import { PiGlobeBold } from "react-icons/pi";
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RxDividerVertical } from "react-icons/rx";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLockBodyScroll } from "@/hooks/hooks";
 
 export function Header() {
+  const [isLanguageOpen, setIsLanguageOpen] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const toggleLanguage = () => {
+    setIsLanguageOpen(!isLanguageOpen);
+  };
 
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
@@ -20,7 +36,7 @@ export function Header() {
     setIsOpen(!isOpen);
   };
 
-  useLockBodyScroll(isOpen, isSearchOpen);
+  useLockBodyScroll(isLanguageOpen, isOpen, isSearchOpen);
 
   return (
     <>
@@ -29,27 +45,27 @@ export function Header() {
           <span className="font-bold text-accent text-base max-md:hidden">
             giftcards
           </span>
-          <div className="flex items-center space-x-5">
+          <div className="flex items-center space-x-5" onClick={toggleSidebar}>
             <div className=" hover-effects hover:bg-primary/10 p-2 rounded-md">
-              <RxHamburgerMenu
-                className="size-5 md:hidden cursor-pointer"
-                onClick={toggleSidebar}
-              />
+              <RxHamburgerMenu className="size-5 md:hidden cursor-pointer" />
             </div>
 
             <span className="text-accent md:hidden">logo</span>
           </div>
           {/* Desktop */}
-          <div className="max-md:hidden flex-1">
+          <div className="max-md:hidden flex-1" onClick={toggleSearch}>
             <SearchToggle />
           </div>
           <div className="flex items-center space-x-1 text-primary/70">
             <div className="flex items-center space-x-2 py-2 px-4 cursor-pointer hover-effects hover:text-primary hover:bg-primary/10 rounded-md">
               <PiGlobeBold className="size-5" />
-              <span>USD</span>
+              <span>XNO/USD</span>
             </div>
             <RxDividerVertical className="size-5 text-primary/20" />
-            <div className="rounded-md p-2 cursor-pointer hover-effects hover:bg-primary/10 hover:text-primary">
+            <div
+              className="rounded-md p-2 cursor-pointer hover-effects hover:bg-primary/10 hover:text-primary"
+              onClick={toggleLanguage}
+            >
               EN
             </div>
           </div>
@@ -60,9 +76,73 @@ export function Header() {
         </div>
       </header>
 
+      <Language
+        isLanguageOpen={isLanguageOpen}
+        toggleLanguage={toggleLanguage}
+      />
       <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
       <SearchBar isSearchOpen={isSearchOpen} toggleSearch={toggleSearch} />
     </>
+  );
+}
+
+function Language({
+  isLanguageOpen,
+  toggleLanguage,
+}: {
+  isLanguageOpen: boolean;
+  toggleLanguage: () => void;
+}) {
+  return (
+    <div
+      className={`bg-black/80 fixed bottom-0 flex items-center justify-center max-md:p-5 min-h-screen w-full hover-effects
+        ${
+          isLanguageOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        } 
+        `}
+      onClick={toggleLanguage}
+    >
+      <div
+        className="font-medium rounded-md bg-white w-full p-5 md:w-[30rem] space-y-5"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="max-md:text-center">
+          <span className="text-lg">Select your language</span>
+          <div className="text-primary/50 text-sm">
+            <span>Select your preferred language for the website.</span>
+          </div>
+        </div>
+
+        <div className="max-md:mx-auto max-md:max-w-sm space-y-2">
+          <span>Language</span>
+
+          <div className="space-y-5">
+            <Select>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="English" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>English</SelectLabel>
+                  <SelectItem value="spanish">Español</SelectItem>
+                  <SelectItem value="french">Français</SelectItem>
+                  <SelectItem value="italiano">Italiano</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
+            <button
+              title="Save Language"
+              className="bg-accent hover-effects hover:bg-accent/80 text-white px-4 py-2 w-full rounded-md"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -73,34 +153,43 @@ function SearchBar({
   isSearchOpen: boolean;
   toggleSearch: () => void;
 }) {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (isSearchOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isSearchOpen]);
   return (
     <div
-      className="bg-black/80 fixed top-0 right-0 left-0 w-full"
+      className={`bg-black/80 fixed bottom-0 flex items-center justify-center max-md:p-5 min-h-screen w-full hover-effects
+        ${
+          isSearchOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        } 
+        `}
       onClick={toggleSearch}
     >
-      <AnimatePresence>
-        {isSearchOpen && (
-          <motion.div
-            key="sidebar" // Key helps AnimatePresence track the component
-            initial={{ y: "100%" }} // Start off-screen
-            animate={{ y: "25vh" }} // Animate in
-            exit={{ y: "100%" }} // Animate out
-            transition={{ type: "tween", duration: 0.5 }} // Animation timing
-            className="h-screen bg-white font-medium rounded-md"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center space-x-2 px-5 pt-5 pb-2 border-b border-primary/20">
-              <IoIosSearch className="size-5 text-primary/50" />
-              <input
-                type="search"
-                title="search"
-                placeholder="Search for products"
-                className="outline-none py-2 flex-1 bg-white"
-              />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div
+        className="font-medium rounded-md bg-white h-[50vh] w-full md:w-[30rem] py-2 space-y-2"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center space-x-2 border-b border-primary/20 px-5">
+          <IoIosSearch className="size-5 text-primary/50" />
+          <input
+            ref={inputRef}
+            type="search"
+            title="search"
+            placeholder="Search for products"
+            className="outline-none py-2 flex-1"
+          />
+        </div>
+
+        <div className="text-primary/50 px-5">
+          <span className="text-sm">Categories</span>
+        </div>
+      </div>
     </div>
   );
 }
