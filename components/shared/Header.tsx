@@ -6,20 +6,7 @@ import { PiGlobeBold } from "react-icons/pi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RxDividerVertical } from "react-icons/rx";
 import { useEffect, useState } from "react";
-
-export function useLockBodyScroll(...openStates: (boolean | null)[]): void {
-  useEffect(() => {
-    const shouldLockScroll = openStates.some((state) => state); // If any state is true
-
-    if (shouldLockScroll) {
-      document.body.style.overflow = "hidden";
-    }
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [openStates]);
-}
+import { useLockBodyScroll } from "@/hooks/hooks";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -108,7 +95,7 @@ function SearchBar({
                 type="search"
                 title="search"
                 placeholder="Search for products"
-                className="outline-none py-2 flex-1"
+                className="outline-none py-2 flex-1 bg-white"
               />
             </div>
           </motion.div>
