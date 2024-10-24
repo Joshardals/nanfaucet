@@ -40,39 +40,44 @@ export function Header() {
 
   return (
     <>
-      <header className="max-content py-5 space-y-5 text-sm font-medium bg-white fixed top-0 left-0 right-0 ">
-        <div className="flex items-center justify-between px-5 md:px-5 md:space-x-5">
-          <span className="font-bold text-accent text-base max-md:hidden">
-            giftcards
-          </span>
-          <div className="flex items-center space-x-5" onClick={toggleSidebar}>
-            <div className=" hover-effects hover:bg-primary/10 p-2 rounded-md">
-              <RxHamburgerMenu className="size-5 md:hidden cursor-pointer" />
-            </div>
+      <header className="py-5 text-sm font-medium bg-white shadow-md fixed top-0 left-0 right-0 ">
+        <div className="max-content space-y-5">
+          <div className="flex items-center justify-between px-5 md:px-5 md:space-x-5">
+            <span className="font-bold text-accent text-base max-md:hidden">
+              giftcards
+            </span>
+            <div
+              className="flex items-center space-x-5"
+              onClick={toggleSidebar}
+            >
+              <div className=" hover-effects hover:bg-primary/10 p-2 rounded-md">
+                <RxHamburgerMenu className="size-5 md:hidden cursor-pointer" />
+              </div>
 
-            <span className="text-accent md:hidden">logo</span>
+              <span className="text-accent md:hidden">logo</span>
+            </div>
+            {/* Desktop */}
+            <div className="max-md:hidden flex-1" onClick={toggleSearch}>
+              <SearchToggle />
+            </div>
+            <div className="flex items-center space-x-1 text-primary/70">
+              <div className="flex items-center space-x-2 py-2 px-4 cursor-pointer hover-effects hover:text-primary hover:bg-primary/10 rounded-md">
+                <PiGlobeBold className="size-5" />
+                <span>XNO/USD</span>
+              </div>
+              <RxDividerVertical className="size-5 text-primary/20" />
+              <div
+                className="rounded-md p-2 cursor-pointer hover-effects hover:bg-primary/10 hover:text-primary"
+                onClick={toggleLanguage}
+              >
+                EN
+              </div>
+            </div>
           </div>
-          {/* Desktop */}
-          <div className="max-md:hidden flex-1" onClick={toggleSearch}>
+
+          <div className="px-5 md:hidden" onClick={toggleSearch}>
             <SearchToggle />
           </div>
-          <div className="flex items-center space-x-1 text-primary/70">
-            <div className="flex items-center space-x-2 py-2 px-4 cursor-pointer hover-effects hover:text-primary hover:bg-primary/10 rounded-md">
-              <PiGlobeBold className="size-5" />
-              <span>XNO/USD</span>
-            </div>
-            <RxDividerVertical className="size-5 text-primary/20" />
-            <div
-              className="rounded-md p-2 cursor-pointer hover-effects hover:bg-primary/10 hover:text-primary"
-              onClick={toggleLanguage}
-            >
-              EN
-            </div>
-          </div>
-        </div>
-
-        <div className="px-5 md:hidden" onClick={toggleSearch}>
-          <SearchToggle />
         </div>
       </header>
 
