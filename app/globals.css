@@ -4,6 +4,14 @@
 
 @layer {
   body {
-    @apply p-0 m-0 scroll-smooth bg-white font-roboto text-[14px] md:text-[16px] overflow-x-hidden;
+    @apply p-0 m-0 scroll-smooth bg-white text-primary font-roboto text-[14px] md:text-[16px] overflow-x-hidden;
+  }
+
+  .hover-effects {
+    @apply transition-all duration-200 ease-in-out;
+  }
+
+  .max-content {
+    @apply max-w-[1200px] mx-auto;
   }
 }

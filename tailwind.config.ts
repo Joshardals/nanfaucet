@@ -8,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: "#1E293B",
+        accent: "#794AFA",
+      },
       fontFamily: {
         roboto: ["var(--font-roboto)"],
       },
