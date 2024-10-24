@@ -187,7 +187,7 @@ function SearchBar({
             type="search"
             title="search"
             placeholder="Search for products"
-            className="outline-none py-2 flex-1"
+            className="outline-none py-2 flex-1 bg-white"
           />
         </div>
 
