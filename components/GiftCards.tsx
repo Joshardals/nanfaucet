@@ -2,7 +2,6 @@
 import Image from "next/image";
 import { FaSlidersH } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { PiCardsLight } from "react-icons/pi";
 import { Ratings } from "./Ratings";
 
 export function GiftCards() {
@@ -27,7 +26,9 @@ export function GiftCards() {
         <span>Result found: 1000</span>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-5">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
+        <Card />
+        <Card />
         <Card />
       </div>
     </section>
