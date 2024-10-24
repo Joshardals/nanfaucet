@@ -1,8 +1,6 @@
 "use client";
 import { HiMiniXMark } from "react-icons/hi2";
-import { IoIosSearch } from "react-icons/io";
 import { motion, AnimatePresence } from "framer-motion";
-import { PiGlobeBold } from "react-icons/pi";
 
 import {
   Select,
