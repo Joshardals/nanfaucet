@@ -128,7 +128,7 @@ export default function page() {
           </div>
           <ul className="space-y-5">
             {nanoData.map((nano, index) => (
-              <li className="space-x-11" key={idx}>
+              <li className="space-x-11" key={index}>
                 <div className="space-x-4 flex items-center">
                   <div className="size-7 bg-accent text-white rounded-full flex items-center justify-center">
                     {nano.label}
