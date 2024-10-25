@@ -1,8 +1,6 @@
-import { AiOutlineApple } from "react-icons/ai";
 import { CiWallet } from "react-icons/ci";
 import Image from "next/image";
 import Link from "next/link";
-import { PiGlobeBold } from "react-icons/pi";
 
 export default function Home() {
   return (
@@ -21,6 +19,7 @@ export default function Home() {
               height={100}
               width={100}
               className="size-10"
+              alt="logo"
             />
             <span className="text-2xl font-bold text-primary">Nano Faucet</span>
           </div>
