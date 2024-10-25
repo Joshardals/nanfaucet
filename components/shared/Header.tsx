@@ -200,7 +200,7 @@ function Sidebar({
             initial={{ x: "-100%" }} // Start off-screen
             animate={{ x: 0 }} // Animate in
             exit={{ x: "-100%" }} // Animate out
-            transition={{ type: "tween", duration: 0.5 }} // Animation timing
+            transition={{ type: "tween", duration: 0.2 }} // Animation timing
             className="h-screen bg-white w-[75vw] p-5 font-medium"
             onClick={(e) => e.stopPropagation()}
           >
