@@ -122,13 +122,13 @@ export default function page() {
               traditional blockchain systems like Bitcoin or Ethereum, which
               rely on Proof of Work (PoW) or Proof of Stake (PoS) and use mining
               to validate transactions, Nano employs a unique mechanism called
-              the "block lattice" and the "Open Representative Voting" (ORV)
-              consensus protocol.
+              the &quot;block lattice&quot; and the &quot;Open Representative
+              Voting&quot; (ORV) consensus protocol.
             </p>
           </div>
           <ul className="space-y-5">
-            {nanoData.map((nano) => (
-              <li className="space-x-11">
+            {nanoData.map((nano, index) => (
+              <li className="space-x-11" key={idx}>
                 <div className="space-x-4 flex items-center">
                   <div className="size-7 bg-accent text-white rounded-full flex items-center justify-center">
                     {nano.label}
