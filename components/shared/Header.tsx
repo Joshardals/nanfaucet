@@ -1,5 +1,8 @@
 "use client";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { HiMiniXMark } from "react-icons/hi2";
+import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 import {
@@ -15,11 +18,24 @@ import {
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RxDividerVertical } from "react-icons/rx";
 import { useLockBodyScroll } from "@/hooks/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function Header() {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [price, setPrice] = useState<number | null>(null);
+
+  const fetchPrice = async () => {
+    try {
+      const response = await fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=nano&vs_currencies=usd"
+      );
+      const data = await response.json();
+      setPrice(data.nano.usd);
+    } catch (error) {
+      console.error("Error fetching price:", error);
+    }
+  };
 
   const toggleLanguage = () => {
     setIsLanguageOpen(!isLanguageOpen);
@@ -31,28 +47,42 @@ export function Header() {
 
   useLockBodyScroll(isLanguageOpen, isOpen);
 
+  useEffect(() => {
+    fetchPrice(); // Fetch price initially
+
+    const interval = setInterval(() => {
+      fetchPrice(); // Auto-refresh price every 10 seconds
+    }, 10000);
+
+    return () => clearInterval(interval); // Clean up interval on component unmount
+  }, []);
+
   return (
     <>
-      <header className="py-5 text-sm font-medium bg-white shadow-md fixed top-0 left-0 right-0 z-10 ">
+      <header className="py-2 text-sm font-medium bg-white shadow-md fixed top-0 left-0 right-0 z-10">
         <div className="max-content space-y-5">
           <div className="flex items-center justify-between px-5 md:px-5 md:space-x-5">
-            <span className="font-bold text-accent text-base max-md:hidden">
-              giftcards
-            </span>
-            <div
-              className="flex items-center space-x-5"
-              onClick={toggleSidebar}
-            >
-              <div className=" hover-effects hover:bg-primary/10 p-2 rounded-md">
-                <RxHamburgerMenu className="size-5 md:hidden cursor-pointer" />
+            <div className="max-md:hidden">
+              <Logo />
+            </div>
+            <div className="flex items-center space-x-2">
+              <div onClick={toggleSidebar}>
+                <div className=" hover-effects hover:bg-primary/10 p-2 rounded-md">
+                  <RxHamburgerMenu className="size-5 md:hidden cursor-pointer" />
+                </div>
               </div>
-
-              <span className="text-accent md:hidden">logo</span>
+              <div className="md:hidden">
+                <Logo />
+              </div>
             </div>
             <div className="flex items-center space-x-1 text-primary/70">
               <div className="flex items-center space-x-2 py-2 px-4 cursor-pointer hover-effects hover:text-primary hover:bg-primary/10 rounded-md">
-                {/* <PiGlobeBold className="size-5" /> */}
                 <span>XNO/USD</span>
+                {price !== null ? (
+                  <span className="text-primary">${price.toFixed(2)}</span>
+                ) : (
+                  <AiOutlineLoading3Quarters className=" animate-spin" />
+                )}
               </div>
               <RxDividerVertical className="size-5 text-primary/20" />
               <div
@@ -135,6 +165,22 @@ function Language({
   );
 }
 
+function Logo() {
+  return (
+    <Link className="flex items-center space-x-2 cursor-pointer" href="/">
+      <Image
+        src="/logo.png"
+        height={100}
+        width={100}
+        alt="Logo Image"
+        className="size-7"
+      />
+      <span className="font-bold font-lora text-accent text-lg max-md:hidden">
+        nano faucet
+      </span>
+    </Link>
+  );
+}
 function Sidebar({
   isOpen,
   toggleSidebar,

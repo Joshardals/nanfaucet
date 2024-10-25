@@ -15,6 +15,7 @@ const config: Config = {
       },
       fontFamily: {
         roboto: ["var(--font-roboto)"],
+        lora: ["var(--font-lora)"],
       },
       borderRadius: {
         lg: "var(--radius)",

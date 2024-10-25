@@ -1,7 +1,7 @@
 import { Header } from "@/components/shared/Header";
 import "./globals.css";
 import type { Metadata } from "next";
-import { roboto } from "./fonts/fonts";
+import { roboto, lora } from "./fonts/fonts";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,9 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased ${roboto.variable}`}>
+      <body className={`antialiased ${roboto.variable} ${lora.variable}`}>
         <Header />
-        <div className="mt-[4.7rem]">{children}</div>
+        <div className="mt-[3.4rem]">{children}</div>
       </body>
     </html>
   );
