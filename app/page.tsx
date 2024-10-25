@@ -50,7 +50,7 @@ export default function Home() {
         <div className="space-y-2">
           <div className="flex items-center space-x-2 text-primary">
             <CiWallet className="size-7" />
-            <span>Don&apos;t Have a Nano Wallet?</span>
+            <span className="font-bold">Don&apos;t Have a Nano Wallet?</span>
           </div>
           <span className="text-xs">
             Download a free Nano wallet for your address

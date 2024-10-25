@@ -208,6 +208,12 @@ function Sidebar({
               className="size-6 float-right cursor-pointer text-primary/50 hover-effects hover:text-primary"
               onClick={toggleSidebar}
             />
+
+            <ul className="mt-5">
+              <li onClick={toggleSidebar}>
+                <Link href="/discover-nano">What is Nano?</Link>
+              </li>
+            </ul>
           </motion.div>
         )}
       </AnimatePresence>
