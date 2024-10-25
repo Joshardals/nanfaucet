@@ -70,6 +70,13 @@ export default function Home() {
             friends to join the nano ecosystem”
           </span>
         </div>
+
+        <div>
+          <div className=" shadow-lg cursor-pointer bg-white ring-2 ring-accent rounded-lg p-5 flex flex-col items-center space-y-2 transition-all duration-300 ease-in-out hover:scale-105">
+            <span className="text-sm text-primary/50">Referred Users</span>
+            <span className="text-2xl font-bold text-primary">100</span>
+          </div>
+        </div>
       </section>
     </main>
   );
