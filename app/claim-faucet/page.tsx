@@ -33,7 +33,7 @@ export default function page() {
   );
 }
 
-export function Step({ label, content }: { label: number; content: string }) {
+function Step({ label, content }: { label: number; content: string }) {
   return (
     <li className="flex items-center space-x-4">
       <div>

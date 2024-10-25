@@ -75,7 +75,7 @@ export default function Home() {
   );
 }
 
-export function Item({ label }: { label: string }) {
+function Item({ label }: { label: string }) {
   return (
     <div className="ring-1 ring-primary/20 p-2  rounded-md flex items-center justify-center space-x-2">
       <span>{label}</span>
