@@ -153,7 +153,7 @@ export default function page() {
 
         <div className="space-y-2">
           <span className="text-xl capitalize font-bold text-primary">
-            Brief History of Nano
+            History of Nano
           </span>
 
           <ul className="space-y-5">
