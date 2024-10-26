@@ -10,9 +10,9 @@ export function Question({
   question,
   answer,
 }: {
-  item: String;
-  question: String;
-  answer: String;
+  item: string;
+  question: string;
+  answer: string;
 }) {
   return (
     <div>
