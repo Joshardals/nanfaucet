@@ -317,7 +317,7 @@ function Sidebar({
       >
         <ul className="space-y-2 flex flex-col">
           {walletLinks.map((item, index) => (
-            <Link href={item.href} legacyBehavior>
+            <Link key={index} href={item.href} legacyBehavior>
               <a
                 target="_blank"
                 rel="noopener noreferrer"
