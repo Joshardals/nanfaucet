@@ -1,7 +1,13 @@
 "use client";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { FiArrowRight } from "react-icons/fi";
+import { CiWallet } from "react-icons/ci";
+import { FiHelpCircle } from "react-icons/fi";
+
 import Image from "next/image";
 import Link from "next/link";
+
+import { MdOutlineWaterDrop } from "react-icons/md";
 
 import {
   Select,
@@ -21,7 +27,7 @@ import { usePathname } from "next/navigation";
 
 export function Header() {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [price, setPrice] = useState<number | null>(null);
 
   const fetchPrice = async () => {
@@ -186,8 +192,21 @@ function Logo() {
 }
 
 const sidebarLinks = [
-  { label: "Nano Faucet", href: "/" },
-  { label: "What is Nano?", href: "/discover-nano" },
+  {
+    label: "Nano Faucet",
+    href: "/",
+    icon: <MdOutlineWaterDrop className="size-4" />,
+  },
+  {
+    label: "What is Nano?",
+    href: "/discover-nano",
+    icon: <FiHelpCircle className="size-4" />,
+  },
+  {
+    label: "Wallets",
+    href: "#",
+    icon: <CiWallet className="size-4" />,
+  },
 ];
 
 function Sidebar({
@@ -197,28 +216,70 @@ function Sidebar({
   isOpen: boolean;
   toggleSidebar: () => void;
 }) {
+  const [isWalletOpen, setIsWalletOpen] = useState(false);
   const pathname = usePathname();
+
+  const toggleWallet = () => {
+    setIsWalletOpen(!isWalletOpen);
+  };
   return (
-    <div
-      className={`bg-white rounded-md w-40 hover-effects fixed mx-7 py-1 shadow-md ${
-        isOpen
-          ? "pointer-events-auto opacity-100"
-          : "pointer-events-none opacity-0"
-      } `}
-    >
-      <ul className="space-y-2">
-        {sidebarLinks.map((item, index) => (
-          <li
-            key={index}
-            onClick={toggleSidebar}
-            className={`hover:bg-accent/10 hover:text-accent hover-effects px-4 py-2 ${
-              pathname === item.href && "bg-accent/10 text-accent"
-            }`}
-          >
-            <Link href={item.href}>{item.label}</Link>
-          </li>
-        ))}
-      </ul>
+    <div className="relative">
+      <div
+        className={`bg-white rounded-md hover-effects fixed mx-7 py-1 shadow-md ${
+          isOpen
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
+        } `}
+      >
+        <ul className="space-y-2">
+          {sidebarLinks.map(
+            (
+              item: { label: string; href: string; icon: JSX.Element },
+              index
+            ) => (
+              <li
+                key={index}
+                onClick={() => {
+                  if (item.label === "Wallets") {
+                    toggleWallet();
+                    return;
+                  }
+                  toggleSidebar();
+                  setIsWalletOpen(false);
+                }}
+                className={`hover:bg-accent/10 hover:text-accent hover-effects justify-between p-2 w-40 ${
+                  item.label === "Wallets" && isWalletOpen
+                    ? "bg-accent/10 text-accent"
+                    : pathname === item.href && !isWalletOpen
+                    ? "bg-accent/10 text-accent"
+                    : null
+                }`}
+              >
+                <Link href={item.href} className="flex items-center space-x-4">
+                  {item.icon}
+                  <span className="flex-1">{item.label}</span>
+                  {item.label === "Wallets" && (
+                    <FiArrowRight className="size-4" />
+                  )}
+                </Link>
+              </li>
+            )
+          )}
+        </ul>
+      </div>
+      <div
+        className={`bg-white hover-effects fixed top-36 left-48 rounded-md shadow-md p-2 w-28  ${
+          isWalletOpen
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
+        } `}
+      >
+        <ul className="space-y-2">
+          <li className="p-2">Natrium</li>
+          <li className="p-2">Nault</li>
+          <li className="p-2">Nautilus</li>
+        </ul>
+      </div>
     </div>
   );
 }
