@@ -19,6 +19,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { RxDividerVertical } from "react-icons/rx";
 import { useLockBodyScroll } from "@/hooks/hooks";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export function Header() {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
@@ -45,7 +46,7 @@ export function Header() {
     setIsOpen(!isOpen);
   };
 
-  useLockBodyScroll(isLanguageOpen, isOpen);
+  useLockBodyScroll(isLanguageOpen);
 
   useEffect(() => {
     fetchPrice(); // Fetch price initially
@@ -181,6 +182,12 @@ function Logo() {
     </Link>
   );
 }
+
+const sidebarLinks = [
+  { label: "Nano Faucet", href: "/" },
+  { label: "What is Nano?", href: "/discover-nano" },
+];
+
 function Sidebar({
   isOpen,
   toggleSidebar,
@@ -188,35 +195,66 @@ function Sidebar({
   isOpen: boolean;
   toggleSidebar: () => void;
 }) {
+  const pathname = usePathname();
   return (
     <div
-      className="bg-black/80 fixed top-0 right-0 left-0 w-full z-20"
-      onClick={toggleSidebar}
+      className={`bg-white rounded-md w-40 hover-effects fixed mx-7 py-1 shadow-md ${
+        isOpen
+          ? "pointer-events-auto opacity-100"
+          : "pointer-events-none opacity-0"
+      } `}
     >
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            key="sidebar" // Key helps AnimatePresence track the component
-            initial={{ x: "-100%" }} // Start off-screen
-            animate={{ x: 0 }} // Animate in
-            exit={{ x: "-100%" }} // Animate out
-            transition={{ type: "tween", duration: 0.2 }} // Animation timing
-            className="h-screen bg-white w-[75vw] p-5 font-medium"
-            onClick={(e) => e.stopPropagation()}
+      <ul className="space-y-2">
+        {sidebarLinks.map((item, index) => (
+          <li
+            onClick={toggleSidebar}
+            className={`hover:bg-accent/10 hover:text-accent hover-effects px-4 py-2 ${
+              pathname === item.href && "bg-accent/10 text-accent"
+            }`}
           >
-            <HiMiniXMark
-              className="size-6 float-right cursor-pointer text-primary/50 hover-effects hover:text-primary"
-              onClick={toggleSidebar}
-            />
-
-            <ul className="mt-5">
-              <li onClick={toggleSidebar}>
-                <Link href="/discover-nano">What is Nano?</Link>
-              </li>
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <Link href={item.href}>{item.label}</Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
+// function Sidebar({
+//   isOpen,
+//   toggleSidebar,
+// }: {
+//   isOpen: boolean;
+//   toggleSidebar: () => void;
+// }) {
+//   return (
+//     <div
+//       className="bg-black/80 fixed top-0 right-0 left-0 w-full z-20"
+//       onClick={toggleSidebar}
+//     >
+//       <AnimatePresence>
+//         {isOpen && (
+//           <motion.div
+//             key="sidebar" // Key helps AnimatePresence track the component
+//             initial={{ x: "-100%" }} // Start off-screen
+//             animate={{ x: 0 }} // Animate in
+//             exit={{ x: "-100%" }} // Animate out
+//             transition={{ type: "tween", duration: 0.2 }} // Animation timing
+//             className="h-screen bg-white w-[75vw] p-5 font-medium"
+//             onClick={(e) => e.stopPropagation()}
+//           >
+//             <HiMiniXMark
+//               className="size-6 float-right cursor-pointer text-primary/50 hover-effects hover:text-primary"
+//               onClick={toggleSidebar}
+//             />
+
+// <ul className="mt-5">
+//   <li onClick={toggleSidebar}>
+//     <Link href="/discover-nano">What is Nano?</Link>
+//   </li>
+// </ul>
+//           </motion.div>
+//         )}
+//       </AnimatePresence>
+//     </div>
+//   );
+// }

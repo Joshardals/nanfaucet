@@ -11,11 +11,11 @@ export default function page() {
             <Step label={1} content="Sign up with a dedicated nano address" />
             <Step
               label={2}
-              content="Qualify to receive airdrop by referring friends to join the nano ecosystem"
+              content="Qualify to receive airdrop by referring friends to join the nano ecosystem(minimum of 10 users to validate referrals)"
             />
             <Step
               label={3}
-              content="Receive your nano airdrop by making a verified nano transaction of the minimum value"
+              content="Receive your nano airdrop by making a verified nano transaction of the minimum value with your nano address"
             />
           </ul>
         </div>
