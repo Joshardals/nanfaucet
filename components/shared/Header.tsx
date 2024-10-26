@@ -1,13 +1,15 @@
 "use client";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FiArrowRight } from "react-icons/fi";
-import { CiWallet } from "react-icons/ci";
+import { IoWalletOutline } from "react-icons/io5";
+import { FaChartLine } from "react-icons/fa6";
 import { FiHelpCircle } from "react-icons/fi";
 
 import Image from "next/image";
 import Link from "next/link";
 
 import { MdOutlineWaterDrop } from "react-icons/md";
+import { MdOutlineQuestionAnswer } from "react-icons/md";
 
 import {
   Select,
@@ -22,12 +24,13 @@ import {
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RxDividerVertical } from "react-icons/rx";
 import { useLockBodyScroll } from "@/hooks/hooks";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 export function Header() {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isWalletOpen, setIsWalletOpen] = useState(false);
   const [price, setPrice] = useState<number | null>(null);
 
   const fetchPrice = async () => {
@@ -48,6 +51,10 @@ export function Header() {
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
+  };
+
+  const toggleWallet = () => {
+    setIsWalletOpen(!isWalletOpen);
   };
 
   useLockBodyScroll(isLanguageOpen);
@@ -71,7 +78,13 @@ export function Header() {
               <Logo />
             </div>
             <div className="flex items-center space-x-2">
-              <div onClick={toggleSidebar}>
+              <div
+                onClick={() => {
+                  toggleSidebar();
+
+                  if (isWalletOpen) setIsWalletOpen(false);
+                }}
+              >
                 <div
                   className={`hover-effects hover:bg-primary/10 p-2 rounded-md ${
                     isOpen && "bg-primary/10"
@@ -109,7 +122,13 @@ export function Header() {
         isLanguageOpen={isLanguageOpen}
         toggleLanguage={toggleLanguage}
       />
-      <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
+      <Sidebar
+        isOpen={isOpen}
+        toggleSidebar={toggleSidebar}
+        isWalletOpen={isWalletOpen}
+        setIsWalletOpen={setIsWalletOpen}
+        toggleWallet={toggleWallet}
+      />
     </>
   );
 }
@@ -205,23 +224,35 @@ const sidebarLinks = [
   {
     label: "Wallets",
     href: "#",
-    icon: <CiWallet className="size-4" />,
+    icon: <IoWalletOutline className="size-4" />,
+  },
+  {
+    label: "Markets",
+    href: "#",
+    icon: <FaChartLine className="size-4" />,
+  },
+  {
+    label: "FAQs",
+    href: "/faqs",
+    icon: <MdOutlineQuestionAnswer className="size-4" />,
   },
 ];
 
 function Sidebar({
   isOpen,
+  isWalletOpen,
+  setIsWalletOpen,
   toggleSidebar,
+  toggleWallet,
 }: {
   isOpen: boolean;
+  isWalletOpen: boolean;
+  setIsWalletOpen: Dispatch<SetStateAction<boolean>>;
+  toggleWallet: () => void;
   toggleSidebar: () => void;
 }) {
-  const [isWalletOpen, setIsWalletOpen] = useState(false);
   const pathname = usePathname();
 
-  const toggleWallet = () => {
-    setIsWalletOpen(!isWalletOpen);
-  };
   return (
     <div className="relative">
       <div
