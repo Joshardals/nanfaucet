@@ -1,9 +1,7 @@
 "use client";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { HiMiniXMark } from "react-icons/hi2";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
 
 import {
   Select,
@@ -68,7 +66,11 @@ export function Header() {
             </div>
             <div className="flex items-center space-x-2">
               <div onClick={toggleSidebar}>
-                <div className=" hover-effects hover:bg-primary/10 p-2 rounded-md">
+                <div
+                  className={`hover-effects hover:bg-primary/10 p-2 rounded-md ${
+                    isOpen && "bg-primary/10"
+                  }`}
+                >
                   <RxHamburgerMenu className="size-5 md:hidden cursor-pointer" />
                 </div>
               </div>
@@ -207,6 +209,7 @@ function Sidebar({
       <ul className="space-y-2">
         {sidebarLinks.map((item, index) => (
           <li
+            key={index}
             onClick={toggleSidebar}
             className={`hover:bg-accent/10 hover:text-accent hover-effects px-4 py-2 ${
               pathname === item.href && "bg-accent/10 text-accent"
@@ -219,42 +222,3 @@ function Sidebar({
     </div>
   );
 }
-// function Sidebar({
-//   isOpen,
-//   toggleSidebar,
-// }: {
-//   isOpen: boolean;
-//   toggleSidebar: () => void;
-// }) {
-//   return (
-//     <div
-//       className="bg-black/80 fixed top-0 right-0 left-0 w-full z-20"
-//       onClick={toggleSidebar}
-//     >
-//       <AnimatePresence>
-//         {isOpen && (
-//           <motion.div
-//             key="sidebar" // Key helps AnimatePresence track the component
-//             initial={{ x: "-100%" }} // Start off-screen
-//             animate={{ x: 0 }} // Animate in
-//             exit={{ x: "-100%" }} // Animate out
-//             transition={{ type: "tween", duration: 0.2 }} // Animation timing
-//             className="h-screen bg-white w-[75vw] p-5 font-medium"
-//             onClick={(e) => e.stopPropagation()}
-//           >
-//             <HiMiniXMark
-//               className="size-6 float-right cursor-pointer text-primary/50 hover-effects hover:text-primary"
-//               onClick={toggleSidebar}
-//             />
-
-// <ul className="mt-5">
-//   <li onClick={toggleSidebar}>
-//     <Link href="/discover-nano">What is Nano?</Link>
-//   </li>
-// </ul>
-//           </motion.div>
-//         )}
-//       </AnimatePresence>
-//     </div>
-//   );
-// }
