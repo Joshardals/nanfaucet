@@ -98,7 +98,7 @@ export function Header() {
               </div>
             </div>
             <div className="flex items-center space-x-1 text-primary/70">
-              <div className="flex items-center space-x-2 py-2 px-4 cursor-pointer hover-effects hover:text-primary hover:bg-primary/10 rounded-md">
+              <div className="flex items-center space-x-2 py-2 px-4 cursor-pointer rounded-md">
                 <span>XNO/USD</span>
                 {price !== null ? (
                   <span className="text-primary">${price.toFixed(2)}</span>
@@ -107,12 +107,7 @@ export function Header() {
                 )}
               </div>
               <RxDividerVertical className="size-5 text-primary/20" />
-              <div
-                className="rounded-md p-2 cursor-pointer hover-effects hover:bg-primary/10 hover:text-primary"
-                onClick={toggleLanguage}
-              >
-                EN
-              </div>
+              <div className="rounded-md p-2">EN</div>
             </div>
           </div>
         </div>
