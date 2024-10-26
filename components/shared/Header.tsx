@@ -27,7 +27,7 @@ import { usePathname } from "next/navigation";
 
 export function Header() {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [price, setPrice] = useState<number | null>(null);
 
   const fetchPrice = async () => {
