@@ -223,18 +223,33 @@ const sidebarLinks = [
   },
   {
     label: "Wallets",
-    href: "#",
+    href: "",
     icon: <IoWalletOutline className="size-4" />,
   },
   {
     label: "Markets",
-    href: "#",
+    href: "https://coinmarketcap.com/currencies/nano/",
     icon: <FaChartLine className="size-4" />,
   },
   {
     label: "FAQs",
     href: "/faqs",
     icon: <MdOutlineQuestionAnswer className="size-4" />,
+  },
+];
+
+const walletLinks = [
+  {
+    label: "Natrium",
+    href: "https://natrium.io/",
+  },
+  {
+    label: "Nault",
+    href: "https://nault.cc",
+  },
+  {
+    label: "Nautilus",
+    href: "https://nautilus.io",
   },
 ];
 
@@ -278,7 +293,7 @@ function Sidebar({
                   toggleSidebar();
                   setIsWalletOpen(false);
                 }}
-                className={`hover:bg-accent/10 hover:text-accent hover-effects justify-between p-2 w-40 ${
+                className={`hover:bg-accent/10 hover:text-accent hover-effects p-2 w-40 ${
                   item.label === "Wallets" && isWalletOpen
                     ? "bg-accent/10 text-accent"
                     : pathname === item.href && !isWalletOpen
@@ -299,16 +314,24 @@ function Sidebar({
         </ul>
       </div>
       <div
-        className={`bg-white hover-effects fixed top-36 left-48 rounded-md shadow-md p-2 w-28  ${
+        className={`bg-white hover-effects fixed top-36 left-48 rounded-md shadow-md w-28  ${
           isWalletOpen
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
         } `}
       >
-        <ul className="space-y-2">
-          <li className="p-2">Natrium</li>
-          <li className="p-2">Nault</li>
-          <li className="p-2">Nautilus</li>
+        <ul className="space-y-2 flex flex-col">
+          {walletLinks.map((item, index) => (
+            <Link href={item.href} legacyBehavior>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 w-28 hover:bg-accent/10 hover:text-accent hover-effects"
+              >
+                {item.label}
+              </a>
+            </Link>
+          ))}
         </ul>
       </div>
     </div>
