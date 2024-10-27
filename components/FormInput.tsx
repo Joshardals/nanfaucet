@@ -58,7 +58,7 @@ export function FormInput({
                 onChange={(e) => {
                   form.setValue(name, e.target.value);
                 }}
-                disabled={name === "invitedBy" ? true : loading}
+                disabled={loading}
               />
 
               {type === "password" && (
