@@ -51,7 +51,7 @@ interface User {
 
 interface FetchUserInfoResponse {
   success: boolean;
-  userInfo?: User[];
+  userInfo?: User;
   msg?: string;
 }
 
@@ -66,9 +66,9 @@ export async function fetchCurrentUserInfo(): Promise<FetchUserInfoResponse> {
       [Query.equal("userId", userId)]
     );
 
-    console.log("Current", data.documents[0]);
+    const currentUserInfo = data.documents[0] as User;
 
-    return { success: true, userInfo: data.documents[0] };
+    return { success: true, userInfo: currentUserInfo };
   } catch (error) {
     console.error(
       `Failed to fetch User Info Document from the DB: ${error.message}`
