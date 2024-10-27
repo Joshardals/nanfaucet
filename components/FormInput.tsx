@@ -48,12 +48,12 @@ export function FormInput({
                 autoCapitalize="none"
                 autoComplete={type === "password" ? "new-password" : "off"}
                 autoCorrect="off"
-                id={name}
+                id={name!}
                 placeholder={placeholder}
                 type={inputType}
                 {...field}
                 onChange={(e) => {
-                  form.setValue(name, e.target.value);
+                  form.setValue(name!, e.target.value);
                 }}
                 disabled={loading}
               />
