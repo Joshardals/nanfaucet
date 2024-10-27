@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { Form } from "./ui/form";
@@ -30,7 +30,7 @@ const formSchema = z.object({
     .max(20, "Password cannot exceed 20 characters"),
 });
 
-export function RegisterForm() {
+export function RegisterFormComponent() {
   const [error, setError] = useState<string | null>();
   const [loading, setLoading] = useState<boolean>(false);
   const referralParams = useSearchParams();
@@ -188,5 +188,13 @@ export function RegisterForm() {
         </button>
       </form>
     </Form>
+  );
+}
+
+export function RegisterForm() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RegisterFormComponent />
+    </Suspense>
   );
 }
