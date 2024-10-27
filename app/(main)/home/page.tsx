@@ -1,8 +1,15 @@
 import { CiWallet } from "react-icons/ci";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  fetchCurrentUserInfo,
+  fetchReferredUsers,
+} from "@/lib/actions/database.action";
+import Referral from "@/components/Referral";
 
-export default function Home() {
+export default async function Home() {
+  const totalReferred = await fetchReferredUsers();
+  const { userInfo } = await fetchCurrentUserInfo();
   return (
     <main className=" bg-gradient-to-b from-accent to-accent/80 p-2 text-primary/70">
       <section className="p-5 font-medium space-y-5 bg-white rounded-md min-h-screen">
@@ -40,7 +47,7 @@ export default function Home() {
           />
 
           <button
-            title="Save Language"
+            title="Get Nano"
             className="bg-accent hover-effects hover:bg-accent/80 text-white px-4 py-2 w-full rounded-md"
           >
             Get Nano!
@@ -71,10 +78,15 @@ export default function Home() {
           </span>
         </div>
 
+        {/* Referral Link */}
+        <Referral referralCode={userInfo.referralCode} />
+
         <div>
           <div className=" shadow-lg cursor-pointer bg-white ring-2 ring-accent rounded-lg p-5 flex flex-col items-center space-y-2 transition-all duration-300 ease-in-out hover:scale-105">
             <span className="text-sm text-primary/50">Referred Users</span>
-            <span className="text-2xl font-bold text-primary">100</span>
+            <span className="text-2xl font-bold text-primary">
+              {totalReferred?.total}
+            </span>
           </div>
         </div>
       </section>

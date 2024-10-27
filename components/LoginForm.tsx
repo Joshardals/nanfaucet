@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Form } from "./ui/form";
 import { FaSpinner } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
+import { signInUser } from "@/lib/actions/auth.actions";
 
 export function LoginForm() {
   const [error, setError] = useState<string | null>();
@@ -75,7 +76,9 @@ export function LoginForm() {
 
         <button
           title="Save Language"
-          className={`bg-accent hover-effects hover:bg-accent/80 text-white px-4 py-2 w-full rounded-md`}
+          className={`bg-accent hover-effects hover:bg-accent/80 text-white px-4 py-2 w-full rounded-md flex justify-center ${
+            loading && "bg-accent/80"
+          }`}
           disabled={loading}
         >
           {loading ? <FaSpinner className=" animate-spin" /> : "Login"}

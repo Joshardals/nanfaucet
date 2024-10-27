@@ -11,6 +11,8 @@ import Link from "next/link";
 import { MdOutlineWaterDrop } from "react-icons/md";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
 
+import { PiSignOutBold } from "react-icons/pi";
+
 import {
   Select,
   SelectContent,
@@ -20,6 +22,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import { signOutUser } from "@/lib/actions/auth.actions";
 
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RxDividerVertical } from "react-icons/rx";
@@ -108,6 +112,13 @@ export function Header() {
               </div>
               <RxDividerVertical className="size-5 text-primary/20" />
               <div className="rounded-md p-2">EN</div>
+              <div
+                className="hover:bg-accent/10 max-sm:hidden rounded-md cursor-pointer hover:text-accent hover-effects p-2 flex items-center space-x-4"
+                onClick={() => signOutUser()}
+              >
+                <PiSignOutBold className="size-4" />
+                <span>Logout</span>
+              </div>
             </div>
           </div>
         </div>
@@ -272,7 +283,7 @@ function Sidebar({
             : "pointer-events-none opacity-0"
         } `}
       >
-        <ul className="space-y-2">
+        <ul className="space-y-2 w-40">
           {sidebarLinks.map(
             (
               item: { label: string; href: string; icon: JSX.Element },
@@ -288,7 +299,7 @@ function Sidebar({
                   toggleSidebar();
                   setIsWalletOpen(false);
                 }}
-                className={`hover:bg-accent/10 hover:text-accent hover-effects p-2 w-40 ${
+                className={`hover:bg-accent/10 hover:text-accent hover-effects p-2 ${
                   item.label === "Wallets" && isWalletOpen
                     ? "bg-accent/10 text-accent"
                     : pathname === item.href && !isWalletOpen
@@ -306,6 +317,14 @@ function Sidebar({
               </li>
             )
           )}
+
+          <li
+            className="hover:bg-accent/10 cursor-pointer hover:text-accent hover-effects p-2 flex items-center space-x-4"
+            onClick={() => signOutUser()}
+          >
+            <PiSignOutBold className="size-4" />
+            <span>Logout</span>
+          </li>
         </ul>
       </div>
       <div

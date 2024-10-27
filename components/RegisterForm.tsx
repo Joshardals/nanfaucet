@@ -6,9 +6,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { Form } from "./ui/form";
 import { FaSpinner } from "react-icons/fa6";
+import { registerUser } from "@/lib/actions/auth.actions";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -53,7 +54,7 @@ export function RegisterForm() {
         setError(result.msg);
         return;
       }
-      router.push("/");
+      router.push("/login");
     } catch (error: any) {
       console.log(`Error signing up: ${error.message}`);
       setError("An unexpected error occurred. Please try again.");
@@ -95,7 +96,9 @@ export function RegisterForm() {
 
         <button
           title="Save Language"
-          className="bg-accent hover-effects hover:bg-accent/80 text-white px-4 py-2 w-full rounded-md"
+          className={`bg-accent hover-effects hover:bg-accent/80 text-white px-4 py-2 w-full rounded-md flex justify-center  ${
+            loading && "bg-accent/80"
+          }`}
           disabled={loading}
         >
           {loading ? <FaSpinner className=" animate-spin" /> : "Sign Up"}

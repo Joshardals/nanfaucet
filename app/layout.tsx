@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { roboto, lora } from "./fonts/fonts";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
