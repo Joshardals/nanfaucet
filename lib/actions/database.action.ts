@@ -58,7 +58,14 @@ export async function createUserInfo(data: User) {
 export async function fetchCurrentUserInfo(): Promise<FetchUserInfoResponse> {
   try {
     const user = await getCurrentUser();
-    const userId = user.email; // Assuming email is the userId
+
+    // Check if the user is an error message or a valid CurrentUser
+    if (typeof user === "string") {
+      return { success: false, msg: user }; // Return the error message if it's a string
+    }
+
+    // Now it's safe to access email since user is of type CurrentUser
+    const userId = user.email;
 
     const data = await databases.listDocuments(
       DATABASE_ID as string,

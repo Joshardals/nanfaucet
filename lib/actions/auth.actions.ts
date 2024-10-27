@@ -15,18 +15,24 @@ const generateReferralCode = (): string => {
   return nanoid();
 };
 
-export async function getCurrentUser(): Promise<any> {
+export interface CurrentUser {
+  email: string;
+}
+
+export async function getCurrentUser(): Promise<CurrentUser | string> {
   try {
     const { account } = await createSessionClient();
-    return await account.get();
+    const user = await account.get();
+
+    // Ensure the user is cast to CurrentUser
+    return user as CurrentUser;
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return error.message;
+      return error.message; // Return the error message as a string
     }
     return "Unknown error occurred";
   }
 }
-
 export async function signInUser({
   email,
   password,
