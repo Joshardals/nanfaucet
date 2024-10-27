@@ -1,4 +1,5 @@
 import { Header } from "@/components/shared/Header";
+import { Footer } from "@/components/shared/Footer";
 import "./globals.css";
 import type { Metadata } from "next";
 import { roboto, lora } from "./fonts/fonts";
@@ -26,6 +27,7 @@ export default function RootLayout({
       <body className={`antialiased ${roboto.variable} ${lora.variable}`}>
         <Header />
         <div className="mt-[3.4rem]">{children}</div>
+        <Footer />
       </body>
     </html>
   );
