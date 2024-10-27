@@ -15,7 +15,7 @@ export default function page() {
             />
             <Step
               label={3}
-              content="Receive your nano airdrop by making a verified nano transaction of the minimum value with your nano address"
+              content="To receive a Nano airdrop, validate ownership of your Nano address by completing a verified Nano transaction. This requires sending a minimum-value transaction from your Nano address."
             />
           </ul>
         </div>
