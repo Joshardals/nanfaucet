@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function page() {
   return (
     <main className="bg-gradient-to-b from-accent to-accent/80 p-2 text-primary/70">

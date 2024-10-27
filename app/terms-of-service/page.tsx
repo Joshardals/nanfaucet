@@ -24,7 +24,7 @@ export default function page() {
             <Link href="https://nanfaucet.com" className="text-accent">
               https://nanfaucet.com
             </Link>{" "}
-            ("Website").
+            (&quot;Website&quot;).
           </p>
           <p>1.2. Definitions:</p>
           <ul className="list-disc ml-6">
@@ -191,7 +191,7 @@ export default function page() {
           </p>
           <p>
             6.6. Note: Avoid phishing sites posing as Nanfaucet. Only use
-            services located at "nanfaucet.com".
+            services located at &quot;nanfaucet.com&quot;.
           </p>
 
           <h3 className="text-base font-semibold text-primary">
@@ -211,7 +211,7 @@ export default function page() {
           <p>8.1. Nanfaucet disclaims all warranties permitted by law.</p>
           <p>
             8.2. You agree to use the Website at your own risk, with services
-            provided "as-is" without warranties of any kind.
+            provided &quot;as-is&quot; without warranties of any kind.
           </p>
 
           <h3 className="text-base font-semibold text-primary">
