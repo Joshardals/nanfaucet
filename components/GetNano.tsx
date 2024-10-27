@@ -170,7 +170,9 @@ function Modal({
   }, [referralCount, openModal]);
 
   const handleCopy = () => {
-    copyToClipboard("nano-7CABATA");
+    copyToClipboard(
+      "nano_3uh113jmsquuxf6x9374ox8taby3xpioggrtd4bpfz5jk4iyy4pddofpyhow"
+    );
   };
 
   return (
