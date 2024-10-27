@@ -10,12 +10,12 @@ import { useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 
 interface FormInputProps {
-  form: UseFormReturn<{
+  form?: UseFormReturn<{
     password: string;
     email: string;
     nanoWallet: string;
   }>;
-  name: "password" | "email" | "nanoWallet" | "invitedBy";
+  name?: string;
   type?: string;
   placeholder?: string;
   loading?: boolean;
@@ -24,12 +24,12 @@ interface FormInputProps {
 export function FormInput({
   form,
   name,
-  type = "text",
-  placeholder = "",
-  loading = false,
+  type,
+  placeholder,
+  loading,
 }: FormInputProps) {
   const [eyeOpen, setEyeOpen] = useState<boolean>(false);
-  const [inputType, setInputType] = useState<string>(type);
+  const [inputType, setInputType] = useState<string>(type!);
 
   const toggleInputType = () => {
     setEyeOpen(!eyeOpen);
@@ -39,7 +39,7 @@ export function FormInput({
   return (
     <FormField
       control={form.control}
-      name={name}
+      name={name!}
       render={({ field }) => (
         <FormItem>
           <FormControl>
@@ -48,9 +48,9 @@ export function FormInput({
                 autoCapitalize="none"
                 autoComplete={type === "password" ? "new-password" : "off"}
                 autoCorrect="off"
-                className={`${
-                  name === "invitedBy" ? "cursor-not-allowed font-bold" : ""
-                }`}
+                className={`
+                  ${name === "invitedBy" ? "cursor-not-allowed font-bold" : ""}
+                `}
                 id={name}
                 placeholder={placeholder}
                 type={inputType}
@@ -69,7 +69,7 @@ export function FormInput({
                   {eyeOpen ? (
                     <FaEyeSlash className="text-onyx/50 text-lg" />
                   ) : (
-                    <FaEye className="text-onyx/50 text-lg" />
+                    <FaEye className=" text-onyx/50 text-lg" />
                   )}
                 </div>
               )}
