@@ -51,7 +51,7 @@ export function RegisterForm() {
       });
 
       if (!result.success) {
-        setError(result.msg);
+        setError(result.msg as string);
         return;
       }
       router.push("/login");
