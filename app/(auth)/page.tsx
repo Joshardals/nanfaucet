@@ -5,7 +5,7 @@ import { getCurrentUser } from "@/lib/actions/auth.actions";
 // import { redirect } from "next/navigation";
 
 export default async function page() {
-  const user = await getCurrentUser();
+  // const user = await getCurrentUser();
   // if (user) redirect("/home");
   return (
     <div>
