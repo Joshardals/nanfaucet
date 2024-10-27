@@ -36,7 +36,7 @@ export function FormInput({
     setInputType((prevType) => (prevType === "password" ? "text" : "password"));
   };
 
-  return (
+  return form ? (
     <FormField
       control={form.control}
       name={name!}
@@ -48,9 +48,9 @@ export function FormInput({
                 autoCapitalize="none"
                 autoComplete={type === "password" ? "new-password" : "off"}
                 autoCorrect="off"
-                className={`
-                  ${name === "invitedBy" ? "cursor-not-allowed font-bold" : ""}
-                `}
+                className={`${
+                  name === "invitedBy" ? "cursor-not-allowed font-bold" : ""
+                }`}
                 id={name}
                 placeholder={placeholder}
                 type={inputType}
@@ -79,5 +79,5 @@ export function FormInput({
         </FormItem>
       )}
     />
-  );
+  ) : null;
 }
