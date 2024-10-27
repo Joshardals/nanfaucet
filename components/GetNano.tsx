@@ -5,6 +5,18 @@ import { HiOutlineClipboardDocument } from "react-icons/hi2";
 import { HiMiniXMark } from "react-icons/hi2";
 import { FormEvent, useState } from "react";
 import { useLockBodyScroll } from "@/hooks/hooks";
+import { ToastContainer, toast } from "react-toastify";
+
+const copyToClipboard = (text: string) => {
+  navigator.clipboard.writeText(text).then(
+    () => {
+      toast("Transaction Id Copied");
+    },
+    (err) => {
+      console.error("Failed to copy: ", err);
+    }
+  );
+};
 
 export function GetNano() {
   const [isQrOpen, setIsQrOpen] = useState(false);
@@ -27,6 +39,10 @@ export function GetNano() {
       toggleOpenModal();
     }
   }
+
+  const handleCopy = () => {
+    copyToClipboard("nano-7CABATA");
+  };
 
   return (
     <div>
@@ -93,7 +109,10 @@ export function GetNano() {
             </ul>
           </div>
 
-          <div className="text-accent text-xs flex items-center space-x-2 cursor-pointer w-[fit-content] mx-auto">
+          <div
+            className="text-accent text-xs flex items-center space-x-2 cursor-pointer w-[fit-content] mx-auto"
+            onClick={handleCopy}
+          >
             <HiOutlineClipboardDocument className="size-4" />
             <span>nano-7CABATA</span>
           </div>
@@ -116,6 +135,7 @@ export function GetNano() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
