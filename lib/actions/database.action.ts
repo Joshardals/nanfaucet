@@ -1,17 +1,34 @@
+"use server";
+
 import { databases } from "@/lib/appwrite.config";
-import { ID, Query } from "node-appwrite";
+import { ID, Query, Models } from "node-appwrite";
 import { getCurrentUser } from "./auth.actions";
 
 const { DATABASE_ID, USERS_ID } = process.env;
 
-export async function createUserInfo(data: {
+interface User {
   email: string;
   createdAt: string;
   userId: string;
   nanoWallet: string;
   referralCode: string;
   referredBy: string;
-}) {
+}
+
+interface FetchUserInfoResponse {
+  success: boolean;
+  userInfo?: User;
+  msg?: string;
+}
+
+interface UsersResponse {
+  data?: User[];
+  success: boolean;
+  msg?: string;
+  total?: number;
+}
+
+export async function createUserInfo(data: User) {
   try {
     await databases.createDocument(
       DATABASE_ID as string,
@@ -28,37 +45,20 @@ export async function createUserInfo(data: {
     );
 
     return { success: true };
-  } catch (error) {
-    console.log(`Failed to create user document in the db: ${error}`);
-    return { success: false, msg: error };
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.log(`Failed to create user document in the DB: ${error.message}`);
+      return { success: false, msg: error.message };
+    }
+    console.log(`Failed to create user document in the DB: Unknown error`);
+    return { success: false, msg: "Unknown error occurred" };
   }
-}
-
-interface User {
-  email: string;
-  createdAt: string;
-  userId: string;
-  nanoWallet: string;
-  referralCode: string;
-  referredBy: string;
-  $id: string;
-  $createdAt: string;
-  $updatedAt: string;
-  $permissions: string[];
-  $databaseId: string;
-  $collectionId: string;
-}
-
-interface FetchUserInfoResponse {
-  success: boolean;
-  userInfo?: User;
-  msg?: string;
 }
 
 export async function fetchCurrentUserInfo(): Promise<FetchUserInfoResponse> {
   try {
     const user = await getCurrentUser();
-    const { email: userId } = user;
+    const userId = user.email; // Assuming email is the userId
 
     const data = await databases.listDocuments(
       DATABASE_ID as string,
@@ -66,27 +66,45 @@ export async function fetchCurrentUserInfo(): Promise<FetchUserInfoResponse> {
       [Query.equal("userId", userId)]
     );
 
-    const currentUserInfo = data.documents[0] as User;
+    if (data.documents.length === 0) {
+      return { success: false, msg: "User not found" };
+    }
+
+    const currentUserInfo: User = {
+      email: data.documents[0].email || "",
+      createdAt: data.documents[0].$createdAt || "",
+      userId: data.documents[0].userId || "",
+      nanoWallet: data.documents[0].nanoWallet || "",
+      referralCode: data.documents[0].referralCode || "",
+      referredBy: data.documents[0].referredBy || "",
+    };
 
     return { success: true, userInfo: currentUserInfo };
-  } catch (error) {
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error(
+        `Failed to fetch User Info Document from the DB: ${error.message}`
+      );
+      return { success: false, msg: error.message };
+    }
     console.error(
-      `Failed to fetch User Info Document from the DB: ${error.message}`
+      `Failed to fetch User Info Document from the DB: Unknown error`
     );
-    return { success: false, msg: error };
+    return { success: false, msg: "Unknown error occurred" };
   }
-}
-
-interface UsersResponse {
-  data?: User[];
-  success: boolean;
-  msg?: string;
-  total?: number;
 }
 
 export async function fetchReferredUsers(): Promise<UsersResponse> {
   try {
     const userInfo = await fetchCurrentUserInfo();
+
+    if (!userInfo.success || !userInfo.userInfo) {
+      return {
+        success: false,
+        msg: "Current user information is unavailable.",
+      };
+    }
+
     const userRefCode = userInfo.userInfo.referralCode;
 
     const referredUserInfo = await databases.listDocuments(
@@ -95,13 +113,29 @@ export async function fetchReferredUsers(): Promise<UsersResponse> {
       [Query.equal("referredBy", userRefCode)]
     );
 
+    // Map documents to User type
+    const users: User[] = referredUserInfo.documents.map(
+      (doc: Models.Document) => ({
+        email: doc.email || "",
+        createdAt: doc.$createdAt || "",
+        userId: doc.userId || "",
+        nanoWallet: doc.nanoWallet || "",
+        referralCode: doc.referralCode || "",
+        referredBy: doc.referredBy || "",
+      })
+    );
+
     return {
       success: true,
-      data: referredUserInfo.documents,
+      data: users,
       total: referredUserInfo.total,
     };
-  } catch (error) {
-    console.log(`Failed to fetch referred Users: ${error}`);
-    return { success: false, msg: error };
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.log(`Failed to fetch referred Users: ${error.message}`);
+      return { success: false, msg: error.message };
+    }
+    console.log(`Failed to fetch referred Users: Unknown error`);
+    return { success: false, msg: "Unknown error occurred" };
   }
 }

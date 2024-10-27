@@ -1,4 +1,5 @@
 "use server";
+
 import { ID } from "node-appwrite";
 import { cookies } from "next/headers";
 import { createAdminClient, createSessionClient } from "@/lib/appwrite.config";
@@ -14,12 +15,15 @@ const generateReferralCode = (): string => {
   return nanoid();
 };
 
-export async function getCurrentUser() {
+export async function getCurrentUser(): Promise<any> {
   try {
     const { account } = await createSessionClient();
     return await account.get();
-  } catch (error) {
-    return error;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return error.message;
+    }
+    return "Unknown error occurred";
   }
 }
 
@@ -29,10 +33,10 @@ export async function signInUser({
 }: {
   email: string;
   password: string;
-}) {
+}): Promise<{ success: boolean; msg?: string }> {
   try {
     const { account } = await createAdminClient();
-    const session = await account.createEmailPasswordSession(email!, password!);
+    const session = await account.createEmailPasswordSession(email, password);
 
     (await cookies()).set("userSession", session.secret, {
       path: "/",
@@ -43,8 +47,11 @@ export async function signInUser({
 
     // If Successful
     return { success: true };
-  } catch (error) {
-    return { success: false, msg: error };
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return { success: false, msg: error.message };
+    }
+    return { success: false, msg: "Unknown error occurred" };
   }
 }
 
@@ -59,12 +66,12 @@ export async function registerUser({
   password: string;
   referredBy: string;
   nanoWallet: string;
-}) {
+}): Promise<{ success: boolean; msg?: string }> {
   try {
     const { account } = await createAdminClient();
-    const response = await account.create(ID.unique(), email!, password!);
+    const response = await account.create(ID.unique(), email, password);
     const userId = response.email;
-    const referralCode = generateReferralCode(); // Generate an 8 digit unique referral code upon sign up
+    const referralCode = generateReferralCode(); // Generate an 8-digit unique referral code upon sign-up
 
     // Creating a User collection in the database.
     await createUserInfo({
@@ -77,22 +84,28 @@ export async function registerUser({
     });
 
     return { success: true };
-  } catch (error) {
-    console.log(`Error: ${error}`);
-    return { success: false, msg: error };
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.log(`Error: ${error.message}`);
+      return { success: false, msg: error.message };
+    }
+    console.log(`Error: Unknown error occurred`);
+    return { success: false, msg: "Unknown error occurred" };
   }
 }
 
 // Sign Out User
-
-export async function signOutUser() {
+export async function signOutUser(): Promise<void> {
   try {
     const { account } = await createSessionClient();
-
     (await cookies()).delete("userSession");
     await account.deleteSession("current");
-  } catch (error) {
-    return error;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.log(`Error during sign out: ${error.message}`);
+    } else {
+      console.log(`Error during sign out: Unknown error occurred`);
+    }
   }
 
   redirect("/login");

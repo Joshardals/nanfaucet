@@ -1,13 +1,20 @@
 "use client";
-import { FormInput } from "./FormInput";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Form } from "./ui/form";
-import { FaSpinner } from "react-icons/fa6";
+import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import { signInUser } from "@/lib/actions/auth.actions";
+
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "./ui/input";
 
 export function LoginForm() {
   const [error, setError] = useState<string | null>();
@@ -26,6 +33,14 @@ export function LoginForm() {
       password: "",
     },
   });
+
+  const [eyeOpen, setEyeOpen] = useState<boolean>(false);
+  const [inputType, setInputType] = useState<string>("password");
+
+  const toggleInputType = () => {
+    setEyeOpen(!eyeOpen);
+    setInputType((prevType) => (prevType === "password" ? "text" : "password"));
+  };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
@@ -57,19 +72,68 @@ export function LoginForm() {
         className="space-y-6"
         autoComplete="off"
       >
-        <FormInput
-          form={form}
+        <FormField
+          control={form.control}
           name="email"
-          type="email"
-          placeholder="Email Address"
-          loading={loading}
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <div className="relative">
+                  <Input
+                    autoCapitalize="none"
+                    autoCorrect="off"
+                    id="email"
+                    placeholder="Email Address"
+                    type="email"
+                    {...field}
+                    onChange={(e) => {
+                      form.setValue("email", e.target.value);
+                    }}
+                    disabled={loading}
+                  />
+                </div>
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        <FormInput
-          form={form}
+        <FormField
+          control={form.control}
           name="password"
-          type="password"
-          placeholder="Password"
-          loading={loading}
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <div className="relative">
+                  <Input
+                    autoCapitalize="none"
+                    autoCorrect="off"
+                    id="password"
+                    placeholder="Password"
+                    type={inputType}
+                    {...field}
+                    onChange={(e) => {
+                      form.setValue("password", e.target.value);
+                    }}
+                    disabled={loading}
+                  />
+
+                  <div
+                    className="absolute top-0 right-0 h-full flex items-center px-5 cursor-pointer bg-snow rounded-md select-none"
+                    onClick={toggleInputType}
+                  >
+                    {eyeOpen ? (
+                      <FaEyeSlash className="text-onyx/50 text-lg" />
+                    ) : (
+                      <FaEye className="text-onyx/50 text-lg" />
+                    )}
+                  </div>
+                </div>
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
         />
 
         {error && <p className="text-red-500 font-medium text-xs">{error}</p>}
