@@ -190,7 +190,7 @@ function Language({
 
 function Logo() {
   return (
-    <Link className="flex items-center space-x-2 cursor-pointer" href="/">
+    <Link className="flex items-center space-x-2 cursor-pointer" href="/home">
       <Image
         src="/logo.png"
         height={100}
@@ -208,7 +208,7 @@ function Logo() {
 const sidebarLinks = [
   {
     label: "Nano Faucet",
-    href: "/",
+    href: "/home",
     icon: <MdOutlineWaterDrop className="size-4" />,
   },
   {
