@@ -9,15 +9,11 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
 interface FormInputProps {
-  form?: UseFormReturn<
-    {
-      password: string;
-      email: string;
-      nanoWallet: string;
-    },
-    any,
-    undefined
-  >;
+  form?: UseFormReturn<{
+    password: string;
+    email: string;
+    nanoWallet: string;
+  }>;
   name?: string;
   type?: string;
   placeholder?: string;
