@@ -56,7 +56,7 @@ export function RegisterForm() {
       }
       router.push("/login");
     } catch (error) {
-      console.log(`Error signing up: ${error.message}`);
+      console.log(`Error signing up: ${error}`);
       setError("An unexpected error occurred. Please try again.");
     } finally {
       setLoading(false);
