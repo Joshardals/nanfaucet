@@ -9,7 +9,15 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
 interface FormInputProps {
-  form?: any;
+  form?: UseFormReturn<
+    {
+      password: string;
+      email: string;
+      nanoWallet: string;
+    },
+    any,
+    undefined
+  >;
   name?: string;
   type?: string;
   placeholder?: string;
@@ -50,7 +58,7 @@ export function FormInput({
                 placeholder={placeholder}
                 type={inputType}
                 {...field}
-                onChange={(e: any) => {
+                onChange={(e) => {
                   form.setValue(name, e.target.value);
                 }}
                 disabled={name === "invitedBy" ? true : loading}

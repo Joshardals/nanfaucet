@@ -28,7 +28,7 @@ export async function createUserInfo(data: {
     );
 
     return { success: true };
-  } catch (error: any) {
+  } catch (error) {
     console.log(`Failed to create user document in the db: ${error.message}`);
     return { success: false, msg: error.message };
   }
@@ -54,11 +54,11 @@ export async function fetchCurrentUserInfo(): Promise<FetchUserInfoResponse> {
     console.log(data);
 
     return { success: true, userInfo: data.documents[0] };
-  } catch (error: any) {
+  } catch (error) {
     console.error(
       `Failed to fetch User Info Document from the DB: ${error.message}`
     );
-    return { success: false, msg: error.message };
+    return { success: false, msg: error };
   }
 }
 
@@ -85,8 +85,8 @@ export async function fetchReferredUsers(): Promise<UsersResponse> {
       data: referredUserInfo.documents,
       total: referredUserInfo.total,
     };
-  } catch (error: any) {
-    console.log(`Failed to fetch referred Users: ${error.message}`);
-    return { success: false, msg: error.message };
+  } catch (error) {
+    console.log(`Failed to fetch referred Users: ${error}`);
+    return { success: false, msg: error };
   }
 }

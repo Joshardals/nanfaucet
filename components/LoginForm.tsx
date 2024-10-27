@@ -42,8 +42,8 @@ export function LoginForm() {
         return;
       }
       router.push("/home");
-    } catch (error: any) {
-      console.log(`An unexpected error occured: ${error.message}`);
+    } catch (error) {
+      console.log(`An unexpected error occured: ${error}`);
       setError("An unexpected error occurred. Please try again.");
     } finally {
       setLoading(false);

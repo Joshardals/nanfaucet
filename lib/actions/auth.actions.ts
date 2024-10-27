@@ -18,8 +18,8 @@ export async function getCurrentUser() {
   try {
     const { account } = await createSessionClient();
     return await account.get();
-  } catch (error: any) {
-    return error.message;
+  } catch (error) {
+    return error;
   }
 }
 
@@ -43,8 +43,8 @@ export async function signInUser({
 
     // If Successful
     return { success: true };
-  } catch (error: any) {
-    return { success: false, msg: error.message };
+  } catch (error) {
+    return { success: false, msg: error };
   }
 }
 
@@ -77,9 +77,9 @@ export async function registerUser({
     });
 
     return { success: true };
-  } catch (error: any) {
-    console.log(`Error: ${error.message}`);
-    return { success: false, msg: error.message };
+  } catch (error) {
+    console.log(`Error: ${error}`);
+    return { success: false, msg: error };
   }
 }
 
@@ -91,8 +91,8 @@ export async function signOutUser() {
 
     (await cookies()).delete("userSession");
     await account.deleteSession("current");
-  } catch (error: any) {
-    return error.message;
+  } catch (error) {
+    return error;
   }
 
   redirect("/login");

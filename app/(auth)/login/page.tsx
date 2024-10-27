@@ -1,5 +1,4 @@
 import { LoginForm } from "@/components/LoginForm";
-import { RegisterForm } from "@/components/RegisterForm";
 import Image from "next/image";
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/actions/auth.actions";
