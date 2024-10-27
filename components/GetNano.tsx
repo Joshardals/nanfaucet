@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 const copyToClipboard = (text: string) => {
   navigator.clipboard.writeText(text).then(
     () => {
-      toast("Transaction Id Copied");
+      toast("Nano Address Copied");
     },
     (err) => {
       console.error("Failed to copy: ", err);
@@ -72,66 +72,73 @@ export function GetNano() {
             : "pointer-events-none opacity-0"
         } `}
       >
-        <div className="bg-white shadow-md rounded-md font-medium w-full p-5 md:w-[30rem] space-y-5">
-          <div className="flex items-center justify-between">
-            <Link href="/claim-faucet" className="text-xs text-accent right-0 ">
-              How to receive faucet?
-            </Link>
+        <div className="bg-white shadow-md rounded-md font-bold w-full p-5 md:w-[30rem] space-y-5">
+          <div className="ring-2 ring-accent rounded-md p-5 space-y-5 ">
+            <div className="flex items-center justify-between">
+              <Link
+                href="/claim-faucet"
+                className="text-xs text-accent right-0 "
+              >
+                How to receive faucet?
+              </Link>
+
+              <div
+                className="bg-primary/10 p-1 rounded-md cursor-pointer"
+                onClick={toggleOpenModal}
+              >
+                <HiMiniXMark className="size-4" />
+              </div>
+            </div>
+
+            <div>
+              <ul className="space-y-5 text-xs relative">
+                <li className="flex items-center relative space-x-4">
+                  <div className="size-7 ring-1 ring-primary/20 z-20 text-white rounded-full bg-accent flex items-center justify-center">
+                    <span>1</span>
+                  </div>
+                  <span>Referral</span>
+                </li>
+                <li className="flex items-center space-x-4">
+                  <div className="size-7 ring-1 ring-primary/20 z-20 bg-accent text-white rounded-full flex items-center justify-center">
+                    2
+                  </div>
+                  <span>Address Validation</span>
+                </li>
+                <li className="flex items-center space-x-4">
+                  <div className="size-7 ring-1 ring-primary/20 z-20 bg-accent text-white rounded-full flex items-center justify-center">
+                    3
+                  </div>
+                  <span>Airdrop</span>
+                </li>
+
+                <div className="absolute top-0 left-[0.82rem] bg-accent w-[2px] h-[5rem]"></div>
+              </ul>
+            </div>
 
             <div
-              className="bg-primary/10 p-1 rounded-md cursor-pointer"
-              onClick={toggleOpenModal}
+              className="text-accent text-xs flex items-center space-x-2 cursor-pointer w-[fit-content] mx-auto"
+              onClick={handleCopy}
             >
-              <HiMiniXMark className="size-4" />
+              <HiOutlineClipboardDocument className="size-4" />
+              <span>nano-7CABATA</span>
             </div>
-          </div>
 
-          <div>
-            <ul className="space-y-5 text-xs">
-              <li className="flex items-center space-x-4">
-                <div className="size-7 ring-1 ring-primary/20 text-primary/70 rounded-full flex items-center justify-center">
-                  <span>1</span>
-                </div>
-                <span>Referral</span>
-              </li>
-              <li className="flex items-center space-x-4">
-                <div className="size-7 ring-1 ring-primary/20 text-primary/70 rounded-full flex items-center justify-center">
-                  2
-                </div>
-                <span>Address Validation</span>
-              </li>
-              <li className="flex items-center space-x-4">
-                <div className="size-7 ring-1 ring-primary/20 text-primary/70 rounded-full flex items-center justify-center">
-                  3
-                </div>
-                <span>Airdrop</span>
-              </li>
-            </ul>
-          </div>
-
-          <div
-            className="text-accent text-xs flex items-center space-x-2 cursor-pointer w-[fit-content] mx-auto"
-            onClick={handleCopy}
-          >
-            <HiOutlineClipboardDocument className="size-4" />
-            <span>nano-7CABATA</span>
-          </div>
-
-          <div className="flex justify-center items-center flex-col space-y-2 mx-auto">
-            <button
-              className="rounded-md ring-1 text-xs ring-primary/20 px-4 py-2 flex justify-center"
-              onClick={toggleQr}
-            >
-              {isQrOpen ? "Hide QRCode" : "Show QRCode"}
-            </button>
-            {isQrOpen && (
-              <Image
-                src="/address.jpg"
-                width={200}
-                height={200}
-                alt="Wallet Address"
-              />
-            )}
+            <div className="flex justify-center items-center flex-col space-y-2 mx-auto">
+              <button
+                className="rounded-md ring-1 text-xs ring-primary/20 px-4 py-2 flex justify-center"
+                onClick={toggleQr}
+              >
+                {isQrOpen ? "Hide QRCode" : "Show QRCode"}
+              </button>
+              {isQrOpen && (
+                <Image
+                  src="/address.jpg"
+                  width={200}
+                  height={200}
+                  alt="Wallet Address"
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>
