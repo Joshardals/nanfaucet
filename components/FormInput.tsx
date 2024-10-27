@@ -13,7 +13,7 @@ interface FormInputProps {
   form?: UseFormReturn<{
     password: string;
     email: string;
-    nanoWallet: string;
+    nanoWallet?: string;
   }>;
   name?: "email" | "nanoWallet" | "password"; // Typing name more strictly
   type?: string;
