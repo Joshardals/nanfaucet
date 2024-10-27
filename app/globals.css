@@ -14,11 +14,14 @@
   .max-content {
     @apply max-w-[1200px] mx-auto;
   }
+
+  .inactive {
+    @apply size-7 ring-1 ring-primary/20 text-primary/70 rounded-full flex items-center justify-center;
+  }
 }
 
 @layer base {
   :root {
-
-    --radius: 0.5rem
+    --radius: 0.5rem;
   }
 }

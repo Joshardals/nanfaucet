@@ -1,4 +1,5 @@
 import { CiWallet } from "react-icons/ci";
+import { GetNano } from "@/components/GetNano";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -39,20 +40,7 @@ export default async function Home() {
           </p>
         </div>
 
-        <div className="space-y-2">
-          <input
-            type="text"
-            placeholder="Nano address"
-            className="w-full ring-2 ring-accent rounded-md py-2 px-4 outline-none"
-          />
-
-          <button
-            title="Get Nano"
-            className="bg-accent hover-effects hover:bg-accent/80 text-white px-4 py-2 w-full rounded-md"
-          >
-            Get Nano!
-          </button>
-        </div>
+        <GetNano />
 
         <div className="space-y-2">
           <div className="flex items-center space-x-2 text-primary">
