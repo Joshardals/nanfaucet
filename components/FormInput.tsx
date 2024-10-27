@@ -15,7 +15,7 @@ interface FormInputProps {
     email: string;
     nanoWallet: string;
   }>;
-  name: "password" | "email" | "nanoWallet";
+  name: "password" | "email" | "nanoWallet" | "invitedBy";
   type?: string;
   placeholder?: string;
   loading?: boolean;
