@@ -57,9 +57,9 @@ export default function Home() {
           </span>
 
           <div className="grid grid-cols-3 gap-5">
-            <Item label="Natrium" />
-            <Item label="Nault" />
-            <Item label="Nautilus" />
+            <Item label="Natrium" href="https://natrium.io/" />
+            <Item label="Nault" href="https://nault.cc" />
+            <Item label="Nautilus" href="https://nautilus.io" />
           </div>
         </div>
 
@@ -82,10 +82,16 @@ export default function Home() {
   );
 }
 
-function Item({ label }: { label: string }) {
+function Item({ label, href }: { label: string; href: string }) {
   return (
-    <div className="ring-1 ring-primary/20 p-2  rounded-md flex items-center justify-center space-x-2">
-      <span>{label}</span>
-    </div>
+    <Link legacyBehavior href={href}>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        className="transition-all duration-300 ease-in-out hover:scale-105 ring-1 ring-primary/20 p-2  rounded-md flex items-center justify-center space-x-2"
+      >
+        {label}
+      </a>
+    </Link>
   );
 }
