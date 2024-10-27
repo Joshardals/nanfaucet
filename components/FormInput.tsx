@@ -15,7 +15,7 @@ interface FormInputProps {
     email: string;
     nanoWallet: string;
   }>;
-  name?: string;
+  name?: "email" | "nanoWallet" | "password"; // Typing name more strictly
   type?: string;
   placeholder?: string;
   loading?: boolean;
@@ -36,10 +36,10 @@ export function FormInput({
     setInputType((prevType) => (prevType === "password" ? "text" : "password"));
   };
 
-  return form ? (
+  return form ? ( // Conditional rendering to ensure form is defined
     <FormField
       control={form.control}
-      name={name!}
+      name={name!} // name will only accept "email" | "nanoWallet" | "password"
       render={({ field }) => (
         <FormItem>
           <FormControl>
