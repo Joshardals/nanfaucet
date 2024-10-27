@@ -36,10 +36,10 @@ export function FormInput({
     setInputType((prevType) => (prevType === "password" ? "text" : "password"));
   };
 
-  return form ? ( // Conditional rendering to ensure form is defined
+  return form ? (
     <FormField
       control={form.control}
-      name={name!} // name will only accept "email" | "nanoWallet" | "password"
+      name={name!}
       render={({ field }) => (
         <FormItem>
           <FormControl>
@@ -48,9 +48,6 @@ export function FormInput({
                 autoCapitalize="none"
                 autoComplete={type === "password" ? "new-password" : "off"}
                 autoCorrect="off"
-                className={`${
-                  name === "invitedBy" ? "cursor-not-allowed font-bold" : ""
-                }`}
                 id={name}
                 placeholder={placeholder}
                 type={inputType}
