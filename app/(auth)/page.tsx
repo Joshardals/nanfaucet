@@ -1,7 +1,7 @@
 import { LoginForm } from "@/components/LoginForm";
 import Image from "next/image";
 import Link from "next/link";
-import { getCurrentUser } from "@/lib/actions/auth.actions";
+// import { getCurrentUser } from "@/lib/actions/auth.actions";
 // import { redirect } from "next/navigation";
 
 export default async function page() {
