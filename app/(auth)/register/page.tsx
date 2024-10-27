@@ -20,7 +20,7 @@ export default function page() {
         <p className="font-medium text-xs text-center">
           Already have an account?{" "}
           <span>
-            <Link href="/login" className="text-accent">
+            <Link href="/" className="text-accent">
               Log in
             </Link>
           </span>

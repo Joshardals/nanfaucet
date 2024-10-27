@@ -114,5 +114,5 @@ export async function signOutUser(): Promise<void> {
     }
   }
 
-  redirect("/login");
+  redirect("/");
 }
