@@ -29,14 +29,29 @@ export async function createUserInfo(data: {
 
     return { success: true };
   } catch (error) {
-    console.log(`Failed to create user document in the db: ${error.message}`);
-    return { success: false, msg: error.message };
+    console.log(`Failed to create user document in the db: ${error}`);
+    return { success: false, msg: error };
   }
+}
+
+interface User {
+  email: string;
+  createdAt: string;
+  userId: string;
+  nanoWallet: string;
+  referralCode: string;
+  referredBy: string;
+  $id: string;
+  $createdAt: string;
+  $updatedAt: string;
+  $permissions: string[];
+  $databaseId: string;
+  $collectionId: string;
 }
 
 interface FetchUserInfoResponse {
   success: boolean;
-  userInfo?: any;
+  userInfo?: User[];
   msg?: string;
 }
 
@@ -51,7 +66,7 @@ export async function fetchCurrentUserInfo(): Promise<FetchUserInfoResponse> {
       [Query.equal("userId", userId)]
     );
 
-    console.log(data);
+    console.log("Current", data.documents[0]);
 
     return { success: true, userInfo: data.documents[0] };
   } catch (error) {
@@ -63,7 +78,7 @@ export async function fetchCurrentUserInfo(): Promise<FetchUserInfoResponse> {
 }
 
 interface UsersResponse {
-  data?: any;
+  data?: User[];
   success: boolean;
   msg?: string;
   total?: number;
