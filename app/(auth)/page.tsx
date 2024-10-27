@@ -2,11 +2,11 @@ import { LoginForm } from "@/components/LoginForm";
 import Image from "next/image";
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/actions/auth.actions";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 
 export default async function page() {
   const user = await getCurrentUser();
-  if (user) redirect("/home");
+  // if (user) redirect("/home");
   return (
     <div>
       <div className="space-y-2 mb-5">
