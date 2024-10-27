@@ -22,7 +22,7 @@ const copyToClipboard = (text: string) => {
 
 export function GetNano({ referralCount }: { referralCount: number }) {
   const [isQrOpen, setIsQrOpen] = useState(false);
-  const [openModal, setOpenModal] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
   const [address, setAddress] = useState("");
   const [validationError, setValidationError] = useState("");
 
