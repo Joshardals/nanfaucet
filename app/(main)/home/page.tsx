@@ -40,7 +40,7 @@ export default async function Home() {
           </p>
         </div>
 
-        <GetNano />
+        <GetNano referralCount={totalReferred?.total!} />
 
         <div className="space-y-2">
           <div className="flex items-center space-x-2 text-primary">
