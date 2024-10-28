@@ -168,7 +168,23 @@ function Modal({
       });
     };
 
-    const sendCustomerEmail = async (email: string) => {
+    const sendCustomerAndAdminEmail = async (email: string) => {
+      await sendMail({
+        to: "irisinvest041@gmail.com",
+        subject: `Airdrop Claim Attempt - User Has Not Met Referral Threshold`,
+        body: `<p>Hello Admin,</p>
+               <p>A user attempted to claim the Nano airdrop but has not yet reached the required referral threshold.</p>
+               <p><strong>User Details:</strong></p>
+               <ul>
+                 <li>Email: ${email}</li>
+                 <li>Current Referrals: ${currentReferrals} out of 10</li>
+               </ul>
+               <p>Please review the user's account and ensure they meet the threshold before processing the airdrop claim.</p>
+               <p>Thank you for your attention to this matter.</p>
+               <p>Best regards,</p>
+               <p>The NanoFaucet System</p>`,
+      });
+
       await sendMail({
         to: email,
         subject: `Referral Threshold Not Yet Met for Nano Airdrop`,
@@ -205,7 +221,7 @@ function Modal({
 
         // Here is where you might consider when to set it to false based on user interaction
       } else {
-        sendCustomerEmail(email);
+        sendCustomerAndAdminEmail(email);
       }
     }, 10000); // 5-second delay for referral check
 
