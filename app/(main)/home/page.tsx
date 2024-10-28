@@ -40,7 +40,10 @@ export default async function Home() {
           </p>
         </div>
 
-        <GetNano referralCount={totalReferred?.total ?? 0} />
+        <GetNano
+          referralCount={totalReferred?.total ?? 0}
+          email={userInfo?.email ?? ""}
+        />
 
         <div className="space-y-2">
           <div className="flex items-center space-x-2 text-primary">
