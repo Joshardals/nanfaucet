@@ -22,7 +22,7 @@ export default async function page() {
         </div>
 
         <p className="font-medium text-xs text-center">
-          Not a Nan Faucet customer yet?{" "}
+          Not a Nano Faucet customer yet?{" "}
           <span>
             <Link href="/register" className="text-accent">
               Sign Up

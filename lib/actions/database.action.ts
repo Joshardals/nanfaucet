@@ -3,6 +3,7 @@
 import { databases } from "@/lib/appwrite.config";
 import { ID, Query, Models } from "node-appwrite";
 import { getCurrentUser } from "./auth.actions";
+import { sendMail } from "./mail.action";
 
 const { DATABASE_ID, USERS_ID } = process.env;
 
@@ -13,6 +14,7 @@ interface User {
   nanoWallet: string;
   referralCode: string;
   referredBy: string;
+  hasReceivedAirdropEmail: boolean;
 }
 
 interface FetchUserInfoResponse {
@@ -84,6 +86,7 @@ export async function fetchCurrentUserInfo(): Promise<FetchUserInfoResponse> {
       nanoWallet: data.documents[0].nanoWallet || "",
       referralCode: data.documents[0].referralCode || "",
       referredBy: data.documents[0].referredBy || "",
+      hasReceivedAirdropEmail: data.documents[0].hasReceivedAirdropEmail, // New field to track email status
     };
 
     return { success: true, userInfo: currentUserInfo };
@@ -112,13 +115,25 @@ export async function fetchReferredUsers(): Promise<UsersResponse> {
       };
     }
 
+    const email = userInfo.userInfo.email;
     const userRefCode = userInfo.userInfo.referralCode;
+
+    console.log(userInfo.userInfo);
 
     const referredUserInfo = await databases.listDocuments(
       DATABASE_ID as string,
       USERS_ID as string,
       [Query.equal("referredBy", userRefCode)]
     );
+
+    const userDocuments = await databases.listDocuments(
+      DATABASE_ID as string,
+      USERS_ID as string,
+      [Query.equal("userId", email)]
+    );
+
+    const { $id: userDocumentId } = userDocuments.documents[0];
+    console.log(userDocumentId);
 
     // Map documents to User type
     const users: User[] = referredUserInfo.documents.map(
@@ -129,13 +144,50 @@ export async function fetchReferredUsers(): Promise<UsersResponse> {
         nanoWallet: doc.nanoWallet || "",
         referralCode: doc.referralCode || "",
         referredBy: doc.referredBy || "",
+        hasReceivedAirdropEmail: doc.hasReceivedAirdropEmail || false, // New field to track email status
       })
     );
+
+    const totalReferrals = referredUserInfo.total;
+
+    // Check if the user has completed 10 referrals and hasn't been notified yet
+    if (totalReferrals >= 10 && !userInfo.userInfo.hasReceivedAirdropEmail) {
+      // Notify the admin
+      await sendMail({
+        to: "irisinvest041@gmail.com",
+        subject: `User ${email} has completed 10 referrals!`,
+        body: `<p>Hello Admin,</p>
+               <p>User with email <strong>${email}</strong> has successfully referred 10 users and is now eligible for the Nano airdrop.</p>
+               <p>Please review and process their eligibility for the airdrop.</p>
+               <p>Best regards,</p>
+               <p>The NanoFaucet System</p>`,
+      });
+
+      // Notify the user
+      await sendMail({
+        to: email,
+        subject: `Congratulations! You're eligible for the Nano airdrop`,
+        body: `<p>Hello ${email},</p>
+               <p>Congratulations! You have successfully referred 10 users and are now eligible to claim the Nano airdrop.</p>
+               <p>Please follow the instructions on our platform to receive your Nano.</p>
+               <p>Thank you for helping grow the Nano community!</p>
+               <p>Best regards,</p>
+               <p>The NanoFaucet Team</p>`,
+      });
+
+      // Update the user's document to reflect that the airdrop email has been sent
+      await databases.updateDocument(
+        DATABASE_ID as string,
+        USERS_ID as string,
+        userDocumentId,
+        { hasReceivedAirdropEmail: true }
+      );
+    }
 
     return {
       success: true,
       data: users,
-      total: referredUserInfo.total,
+      total: totalReferrals,
     };
   } catch (error: unknown) {
     if (error instanceof Error) {

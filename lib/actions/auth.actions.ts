@@ -88,6 +88,7 @@ export async function registerUser({
       userId,
       referralCode,
       referredBy,
+      hasReceivedAirdropEmail: false,
     });
 
     // Send a mail to the admin.
