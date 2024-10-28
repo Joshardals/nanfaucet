@@ -168,6 +168,24 @@ function Modal({
       });
     };
 
+    const sendCustomerEmail = async (email: string) => {
+      await sendMail({
+        to: email,
+        subject: `Referral Threshold Not Yet Met for Nano Airdrop`,
+        body: `<p>Hello ${email},</p>
+               <p>We wanted to let you know that while you're actively participating on NanoFaucet, your account has not yet reached the referral threshold required to qualify for the Nano airdrop.</p>
+               <p><strong>Current Progress:</strong></p>
+               <ul>
+                 <li>Referrals completed: ${referralCount} out of 10</li>
+               </ul>
+               <p>Once you've referred 10 users, you'll automatically become eligible for the airdrop. Keep inviting friends to earn rewards and reach the threshold sooner!</p>
+               <p>If you have any questions or need assistance, please feel free to reach out to us.</p>
+               <p>Thank you for being a part of the NanoFaucet community!</p>
+               <p>Best regards,</p>
+               <p>The NanoFaucet Team</p>`,
+      });
+    };
+
     // Simulate loading for referral check
     const referralTimeout = setTimeout(() => {
       const referralMet = referralCount >= 10;
@@ -186,6 +204,8 @@ function Modal({
         // You may want to add logic here to listen for user actions that would end the loading state
 
         // Here is where you might consider when to set it to false based on user interaction
+      } else {
+        sendCustomerEmail(email);
       }
     }, 10000); // 5-second delay for referral check
 
