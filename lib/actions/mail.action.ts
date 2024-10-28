@@ -13,7 +13,7 @@ export async function sendMail({
   const { SMTP_EMAIL, SMTP_PASSWORD } = process.env;
 
   const transport = nodemailer.createTransport({
-    host: "smtp.zoho.com", // Use the correct SMTP server
+    host: "smtp.zoho.eu", // Use the correct SMTP server
     port: 465, // Port 465 for SSL or 587 for TLS
     secure: true, // True for SSL
     auth: {

@@ -118,8 +118,6 @@ export async function fetchReferredUsers(): Promise<UsersResponse> {
     const email = userInfo.userInfo.email;
     const userRefCode = userInfo.userInfo.referralCode;
 
-    console.log(userInfo.userInfo);
-
     const referredUserInfo = await databases.listDocuments(
       DATABASE_ID as string,
       USERS_ID as string,
@@ -182,6 +180,8 @@ export async function fetchReferredUsers(): Promise<UsersResponse> {
         userDocumentId,
         { hasReceivedAirdropEmail: true }
       );
+
+      console.log(userInfo.userInfo);
     }
 
     return {
