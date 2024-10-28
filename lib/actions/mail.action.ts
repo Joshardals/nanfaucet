@@ -25,8 +25,12 @@ export async function sendMail({
   try {
     const testResult = await transport.verify();
     console.log("SMTP Connection Verified:", testResult);
-  } catch (error: any) {
-    console.error("Error verifying SMTP connection:", error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Error verifying SMTP connection:", error.message);
+    }
+    console.error("Error verifying SMTP connection: Unknown Error");
+
     return;
   }
 
@@ -38,7 +42,10 @@ export async function sendMail({
       html: body,
     });
     console.log("Email Sent:", sendResult);
-  } catch (error: any) {
-    console.error("Error sending email:", error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.log(`Error sending email:, ${error.message}`);
+    }
+    console.log(`Error sending email:",: Unknown error`);
   }
 }
