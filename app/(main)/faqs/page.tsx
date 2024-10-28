@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+
 import { QuestionBank } from "@/components/QuestionBank";
 
 export default function page() {

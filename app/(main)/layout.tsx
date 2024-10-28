@@ -3,7 +3,6 @@ import { Header } from "@/components/shared/Header";
 import { getCurrentUser } from "@/lib/actions/auth.actions";
 import { redirect } from "next/navigation";
 import React from "react";
-import type { Metadata } from "next";
 
 export default async function Layout({
   children,
