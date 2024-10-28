@@ -177,7 +177,7 @@ function Modal({
                <p><strong>User Details:</strong></p>
                <ul>
                  <li>Email: ${email}</li>
-                 <li>Current Referrals: ${currentReferrals} out of 10</li>
+                 <li>Current Referrals: ${referralCount} out of 10</li>
                </ul>
                <p>Please review the user's account and ensure they meet the threshold before processing the airdrop claim.</p>
                <p>Thank you for your attention to this matter.</p>
