@@ -116,7 +116,7 @@ export async function registerUser({
       subject: `Welcome to Nano Faucet, ${email}!`,
       body: `<p>Hello ${email},</p>
 
-      <p>Welcome to NanoFaucet! We’re excited to have you here as part of the Nano community.</p>
+      <p>Welcome to NanoFaucet! We’re excited to   have you here as part of the Nano community.</p>
       
       <p>Your account is ready, and you can now start receiving Nano instantly. Simply paste your Nano address on our platform to access up to $999 worth of Nano and experience feeless, instant transactions on the Nano network.</p>
       

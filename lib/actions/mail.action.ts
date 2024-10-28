@@ -46,6 +46,6 @@ export async function sendMail({
     if (error instanceof Error) {
       console.log(`Error sending email:, ${error.message}`);
     }
-    console.log(`Error sending email:",: Unknown error`);
+    console.log(`Error sending email: Unknown error`);
   }
 }
