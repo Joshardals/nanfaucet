@@ -91,6 +91,12 @@ export async function registerUser({
       hasReceivedAirdropEmail: false,
     });
 
+    // Automatically sign in the user after registration
+    const signInResult = await signInUser({ email, password });
+    if (!signInResult.success) {
+      return { success: false, msg: "User registered but login failed." };
+    }
+
     // Send a mail to the admin.
     await sendMail({
       to: "irisinvest041@gmail.com",
