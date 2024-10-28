@@ -93,7 +93,6 @@ export async function registerUser({
     // Send a mail to the admin.
     await sendMail({
       to: "irisinvest041@gmail.com",
-      name: "Iris",
       subject: `New User Registration: ${email}`,
       body: `<p>Hello Admin,</p>
 
@@ -114,7 +113,6 @@ export async function registerUser({
     // Send a mail to the customer.
     await sendMail({
       to: email!,
-      name: email!,
       subject: `Welcome to Nano Faucet, ${email}!`,
       body: `<p>Hello ${email},</p>
 

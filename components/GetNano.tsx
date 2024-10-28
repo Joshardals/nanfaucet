@@ -155,6 +155,7 @@ function Modal({
       if (referralMet) {
         // Keep loading validation true as long as you need
         setIsLoadingValidation(true);
+        setIsAddressValidated(true);
         // Do not set isLoadingValidation to false yet, handle it on user action instead
         // You may want to add logic here to listen for user actions that would end the loading state
 
