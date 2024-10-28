@@ -119,7 +119,6 @@ function Modal({
     const fetchPrice = async () => {
       const now = Date.now();
       if (now - lastFetchTime < 60000) {
-        // 1 minute
         console.log("Using cached data...");
         return; // Skip fetch if it's within the time limit
       }
@@ -139,7 +138,7 @@ function Modal({
       } catch (error) {
         console.error("Error fetching price:", error);
       } finally {
-        setIsLoadingPrice(false);
+        setIsLoadingPrice(false); // This will change to false when price fetch is done
         console.log("finished loading...");
       }
     };
@@ -154,14 +153,12 @@ function Modal({
 
       // Start address validation only if referral requirement is met
       if (referralMet) {
+        // Keep loading validation true as long as you need
         setIsLoadingValidation(true);
-        const validationTimeout = setTimeout(() => {
-          setIsAddressValidated(true);
-          setIsLoadingValidation(false);
-        }, 5000); // 5-second delay for address validation
+        // Do not set isLoadingValidation to false yet, handle it on user action instead
+        // You may want to add logic here to listen for user actions that would end the loading state
 
-        // Clear validation timeout if component unmounts
-        return () => clearTimeout(validationTimeout);
+        // Here is where you might consider when to set it to false based on user interaction
       }
     }, 5000); // 5-second delay for referral check
 
@@ -270,11 +267,11 @@ function Modal({
               </ul>
             </div>
 
-            {isLoadingReferral || isLoadingValidation || isLoadingPrice ? (
+            {isLoadingReferral || isLoadingPrice ? (
               <div className="flex justify-center items-center">
                 <FaSpinner className="animate-spin size-4" />
               </div>
-            ) : isReferralMet && isAddressValidated ? (
+            ) : isReferralMet ? (
               <div className="space-y-2">
                 <div className="text-xs text-center">
                   <span className="text-primary">
@@ -312,19 +309,18 @@ function Modal({
                     />
                   )}
                 </div>
+                <div className="flex items-center justify-center space-x-4 text-red-500">
+                  <span className="text-xs text-red-500">
+                    Awaiting validation transaction
+                  </span>
+                  <FaSpinner className="animate-spin size-4" />
+                </div>
               </div>
             ) : (
               <span className="flex items-center text-xs text-red-500 text-center">
                 Your account has not reached the referral threshold to qualify
                 for airdrop
               </span>
-            )}
-
-            {/* Add loading message for calculating Nano amounts */}
-            {isLoadingPrice && (
-              <p className="text-primary text-center">
-                Calculating your eligible Nano amount...
-              </p>
             )}
           </div>
         </div>

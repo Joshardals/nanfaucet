@@ -6,6 +6,7 @@ import { createAdminClient, createSessionClient } from "@/lib/appwrite.config";
 import { redirect } from "next/navigation";
 import { customAlphabet } from "nanoid";
 import { createUserInfo } from "./database.action";
+import { sendMail } from "./mail.action";
 
 // Utility Function to generate a referral code
 const generateReferralCode = (): string => {
@@ -87,6 +88,46 @@ export async function registerUser({
       userId,
       referralCode,
       referredBy,
+    });
+
+    // Send a mail to the admin.
+    await sendMail({
+      to: "irisinvest041@gmail.com",
+      name: "Iris",
+      subject: `New User Registration: ${email}`,
+      body: `<p>Hello Admin,</p>
+
+      <p>A new user has just signed up on NanoFaucet.</p>
+
+      <p><strong>User Details:</strong></p>
+      <ul>
+        <li>Email: ${email}</li>
+      </ul>
+
+      <p>Please ensure they receive a warm welcome and any necessary assistance to help them get started smoothly on our platform.</p>
+
+      <p>Best regards,</p>
+      <p>The NanoFaucet System</p>
+      `,
+    });
+
+    // Send a mail to the customer.
+    await sendMail({
+      to: email!,
+      name: email!,
+      subject: `Welcome to Nano Faucet, ${email}!`,
+      body: `<p>Hello ${email},</p>
+
+      <p>Welcome to NanoFaucet! We’re excited to have you here as part of the Nano community.</p>
+      
+      <p>Your account is ready, and you can now start receiving Nano instantly. Simply paste your Nano address on our platform to access up to $999 worth of Nano and experience feeless, instant transactions on the Nano network.</p>
+      
+      <p>If you’d like to maximize your rewards, refer friends and make transactions on the Nano network to qualify for even more Nano in future airdrops.</p>
+      
+      <p>If you have any questions or need support, don’t hesitate to reach out. Enjoy exploring the Nano ecosystem!</p>
+      
+      <p>Best regards,</p>
+      <p>The NanoFaucet Team</p>`,
     });
 
     return { success: true };

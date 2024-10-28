@@ -152,7 +152,7 @@ function Language({
         ${
           isLanguageOpen
             ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
+             : "opacity-0 pointer-events-none"
         } 
         `}
       onClick={toggleLanguage}
