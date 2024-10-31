@@ -1,5 +1,3 @@
-
-
 const historyData = [
   {
     label: 1,
@@ -111,7 +109,7 @@ const nanoData = [
 
 export default function page() {
   return (
-    <main className="bg-gradient-to-b from-accent to-accent/80 p-2 text-primary/70">
+    <main className="bg-gradient-to-b from-accent to-accent/80 p-2 text-primary/70 md:max-w-lg md:mx-auto">
       <section className="font-medium bg-white rounded-md min-h-screen space-y-5 p-5">
         <div className="space-y-5">
           <div className="space-y-2">

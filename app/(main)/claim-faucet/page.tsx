@@ -1,7 +1,6 @@
-
 export default function page() {
   return (
-    <main className="bg-gradient-to-b from-accent to-accent/80 p-2 text-primary/70">
+    <main className="bg-gradient-to-b from-accent to-accent/80 p-2 text-primary/70 md:max-w-lg md:mx-auto">
       <section className="font-medium bg-white rounded-md min-h-screen space-y-5">
         <div className="p-5 space-y-2 h-[fit-content]">
           <span className="text-xl capitalize font-bold text-primary">

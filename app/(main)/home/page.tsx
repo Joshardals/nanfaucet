@@ -12,7 +12,7 @@ export default async function Home() {
   const totalReferred = await fetchReferredUsers();
   const { userInfo } = await fetchCurrentUserInfo();
   return (
-    <main className=" bg-gradient-to-b from-accent to-accent/80 p-2 text-primary/70">
+    <main className=" bg-gradient-to-b from-accent to-accent/80 p-2 text-primary/70 md:max-w-lg md:mx-auto">
       <section className="p-5 font-medium space-y-5 bg-white rounded-md min-h-screen">
         <div className="flex justify-self-end">
           <Link href="/claim-faucet" className="text-xs text-accent right-0 ">
